@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/_5sdp"
+    app:layout_insetEdge="@drawable/insetback"
+    tools:context=".Activites.FliterPopup">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@string/filter"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold"
+            android:letterSpacing="0.2"
+            android:textColor="@color/colorPrimaryDark"
+            android:padding="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/cross_icon"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/cross"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/categories_popup_tv"
+        android:textStyle="bold"
+        android:textColor="@color/dark_gray"
+        android:padding="@dimen/_8sdp"
+        android:textSize="@dimen/_12sdp"
+        android:text="@string/categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Spinner
+        android:id="@+id/filter_spinner"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:paddingStart="@dimen/_5sdp"
+        style="@style/mySpinnerItemStyle"
+        android:textSize="@dimen/_14sdp"
+        android:text="@string/categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@color/grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <TextView
+        android:id="@+id/distance_popup_tv"
+        android:textStyle="bold"
+        android:textColor="@color/dark_gray"
+        android:padding="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
+        android:text="@string/distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/distance_min_tv"
+            android:background="@drawable/gray_border_round"
+            android:hint="0 km"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/distance_max_tv"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:gravity="center"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/gray_border_round"
+            android:hint="1000 km"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/rangeSeekbar4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:corner_radius="10"
+        app:max_value="500"
+        app:gap="1"
+        app:bar_color="#8990C4"
+        app:bar_highlight_color="#01138D"
+        app:left_thumb_image="@drawable/round"
+        app:right_thumb_image="@drawable/round"
+        app:left_thumb_image_pressed="@drawable/round1"
+        app:right_thumb_image_pressed="@drawable/round1"
+        app:data_type="_integer"/>
+    <TextView
+        android:id="@+id/price_popup_tv"
+        android:textStyle="bold"
+        android:textColor="@color/dark_gray"
+        android:padding="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
+        android:text="@string/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/min_price_tv"
+            android:background="@drawable/gray_border_round"
+            android:hint="0 Rs"
+            android:gravity="center"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/max_price_tv"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:gravity="center"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/gray_border_round"
+            android:hint="1000 Rs"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/rangeSeekbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:corner_radius="10"
+        app:min_value="1"
+        app:max_value="1000"
+        app:steps="1"
+        app:bar_color="#F7BB88"
+        app:bar_highlight_color="#B35401"
+        app:left_thumb_image="@drawable/round"
+        app:right_thumb_image="@drawable/round"
+        app:left_thumb_image_pressed="@drawable/round1"
+        app:right_thumb_image_pressed="@drawable/round1"
+        app:data_type="_integer"/>
+
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/apply_btn"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:background="@drawable/btn_yellow"
+            android:layout_alignParentEnd="true"
+            android:text="@string/apply"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp" />
+    </RelativeLayout>
+
+</LinearLayout>

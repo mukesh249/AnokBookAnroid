@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activites.PayNow">
+
+
+    <android.support.v7.widget.Toolbar
+        android:background="@color/white"
+        android:elevation="@dimen/_5sdp"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.Toolbar>
+    <ScrollView
+        android:layout_gravity="center"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_marginTop="25dp"-->
+            <!--app:cardUseCompatPadding="true"-->
+            <!--android:layout_margin="15dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--app:cardElevation="6dp"-->
+            <!--app:cardCornerRadius="10dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+            <LinearLayout
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:layout_margin="25dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/logo"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp" />
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primaryDark"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="Amount on field cut from\n your  wallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:background="@drawable/round_conner_gray"
+                    android:gravity="center"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:padding="7dp"
+                    android:textStyle="bold"
+                    android:drawableStart="@drawable/rupee"
+                    android:drawablePadding="5dp"
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/ammount_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/submit_btn"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:elevation="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/submit"
+                    android:textColor="@color/white"
+                    android:background="@drawable/round_conner_blue"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp" />
+                <com.github.ybq.android.spinkit.SpinKitView
+                    android:visibility="gone"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:id="@+id/spin_kit"
+                    style="@style/SpinKitView.Small.CubeGrid"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    app:SpinKit_Color="@color/colorAccent" />
+            </LinearLayout>
+
+
+
+        <!--</android.support.v7.widget.CardView>-->
+    </ScrollView>
+
+
+</LinearLayout>

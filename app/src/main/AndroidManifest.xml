@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.anokbook">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Activites.SendMonyeOnBank"></activity>
+        <activity android:name=".Activites.NoInternetConnecion" />
+        <activity android:name=".Activites.PayNow" />
+        <activity android:name=".Activites.AddMoney" />
+        <activity android:name=".Activites.SentDetail" />
+        <activity android:name=".Activites.ReceivedDetail" />
+        <activity android:name=".Activites.ImagePerview" />
+        <activity android:name=".Activites.TermAndCondition" />
+        <activity android:name=".Activites.EditPost" />
+        <activity android:name=".Activites.NewChangePassword" />
+        <activity android:name=".Activites.ForgetMobile" />
+        <activity android:name=".Activites.SellerProfile" />
+        <activity android:name=".Activites.ChangePassword" />
+        <activity android:name=".Activites.RequestForABook" />
+        <activity android:name=".Activites.UserProfile" />
+
+        <provider
+            android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
+            android:authorities="br.com.mauker.materialsearchview.searchhistorydatabase"
+            android:exported="false"
+            android:protectionLevel="signature"
+            android:syncable="true" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB7tIYFdkzHflflwJOdiX8LUrPSILU_-T4" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".Activites.ReceivedRequest" />
+        <activity android:name=".Activites.Privacypolicy" />
+        <activity android:name=".Activites.MyWallet" />
+        <activity android:name=".Activites.Notification" />
+        <activity android:name=".Activites.AddImagesForPost" />
+        <activity android:name=".Activites.FAQ" />
+        <activity android:name=".Activites.Setting" />
+        <activity android:name=".Activites.Help" />
+        <activity android:name=".Activites.Given" />
+        <activity android:name=".Activites.Request" />
+        <activity android:name=".Activites.MyAds" />
+        <activity android:name=".Activites.ProfileList" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ImagePickerDemo"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Activites.FliterPopup" />
+        <activity android:name=".Activites.AddPost" />
+        <activity android:name=".Activites.ProfileEdit" />
+        <activity android:name=".Activites.YourArePreparing" />
+        <activity android:name=".Activites.HomeScreen" />
+        <activity android:name=".Activites.Nearbybooks" />
+        <activity android:name=".Activites.OptVerification" />
+        <activity android:name=".Activites.Registration" />
+        <activity android:name=".Activites.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activites.Login" />
+        <activity android:name=".Activites.IntroActivity" />
+        <activity android:name=".Activites.IdoDetail" />
+        <activity android:name=".Activites.SearchView" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider> <!-- <meta-data -->
+        <!-- android:name="io.fabric.ApiKey" -->
+        <!-- android:value="b5ba776f1cc5b84a96c6f8f7001a1e55f9370670" /> -->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="ffeef15904d9e98019154e0ac34d2aed500c5384" />
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_live_fUttKPF9UYssZo" />
+    </application>
+
+</manifest>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activites.RequestForABook">
+
+    <android.support.v7.widget.Toolbar
+        android:transitionName="Toolbar_trans"
+        android:background="@color/white"
+        android:elevation="@dimen/_5sdp"
+        android:id="@+id/profile_edit_toobar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.Toolbar>
+    <ScrollView
+        android:layout_below="@+id/profile_edit_toobar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:focusableInTouchMode="true"
+            android:padding="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:id="@+id/book_name_tv"
+                android:textColor="@color/black"
+                android:text="@string/book_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_below="@+id/book_name_tv"
+                android:focusableInTouchMode="true"
+                android:layout_margin="@dimen/_1sdp"
+                android:padding="@dimen/_6sdp"
+                android:id="@+id/help_name_rel"
+                android:background="@drawable/gray_border_round"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/_10sdp"
+                    android:hint="@string/enter_book_name"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:id="@+id/enter_book_namet_et"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <TextView
+                android:layout_below="@+id/help_name_rel"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:id="@+id/author_name_tv"
+                android:textColor="@color/black"
+                android:text="@string/author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:padding="@dimen/_6sdp"
+                android:layout_below="@+id/author_name_tv"
+                android:id="@+id/help_mobile_rel"
+                android:background="@drawable/gray_border_round"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/_10sdp"
+                    android:hint="@string/enter_author_name"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:id="@+id/author_name_et"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </RelativeLayout>
+            <TextView
+                android:layout_below="@+id/help_mobile_rel"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:id="@+id/publisher_name_tv"
+                android:textColor="@color/black"
+                android:text="@string/enter_publisher_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:padding="@dimen/_6sdp"
+                android:layout_below="@+id/publisher_name_tv"
+                android:id="@+id/help_email_rel"
+                android:background="@drawable/gray_border_round"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/_10sdp"
+                    android:hint="@string/email_address"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:id="@+id/help_email_et"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <Button
+                android:text="@string/submit"
+                android:id="@+id/submit"
+                android:textAllCaps="false"
+                android:background="@drawable/btn_yellow"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_below="@+id/help_email_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="@dimen/_2sdp"
+    app:cardElevation="@dimen/_2sdp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:transitionName="Image_trans"
+            android:scaleType="fitXY"
+            android:layout_centerHorizontal="true"
+            android:src="@color/dark_gray"
+            android:id="@+id/book_image"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_75sdp" />
+        <com.varunest.sparkbutton.SparkButton
+            android:id="@+id/like"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            app:sparkbutton_activeImage="@drawable/ic_favorite"
+            app:sparkbutton_inActiveImage="@drawable/heart"
+            app:sparkbutton_iconSize="20dp"
+            app:sparkbutton_primaryColor="@color/primary"
+            app:sparkbutton_secondaryColor="@color/yellow" />
+        <RelativeLayout
+            android:layout_margin="@dimen/_7sdp"
+            android:layout_below="@+id/book_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:transitionName="Book_name"
+                android:id="@+id/book_name"
+                android:text="Any book"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_10sdp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_toEndOf="@+id/book_name"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/location_from"
+                android:gravity="center|end"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/near"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp" />
+                <TextView
+                    android:id="@+id/distance_tv"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:text="5 km"
+                    android:textSize="@dimen/_6sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/rent_7days_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/book_name"
+                android:text="@string/rent_7_days"
+
+                android:textColor="@color/grey"
+                android:textSize="@dimen/_8sdp" />
+            <TextView
+                android:layout_below="@id/rent_7days_tv"
+                android:id="@+id/security_tv"
+                android:text="Security charge - "
+                android:textColor="@color/grey"
+                android:textSize="@dimen/_8sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_below="@id/rent_7days_tv"
+                android:layout_toEndOf="@+id/security_tv"
+                android:id="@+id/security_charge_tv"
+                android:text="100"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/_8sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_toEndOf="@+id/rent_7days_tv"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:gravity="end"
+                android:layout_below="@+id/book_name"
+                android:id="@+id/posted_tv"
+                android:text="Posted on"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/_7sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_below="@+id/posted_tv"
+                android:layout_toEndOf="@+id/security_charge_tv"
+                android:layout_alignParentEnd="true"
+                android:gravity="end"
+                android:id="@+id/posted_date_tv"
+                android:text="2nd jan 2019"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_7sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

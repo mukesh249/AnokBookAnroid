@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Activites.Nearbybooks">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:elevation="6dp"
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:tint="@color/colorPrimaryDark"
+            android:id="@+id/back_btn"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:padding="2dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:contentDescription="@string/todo" />
+        <AutoCompleteTextView
+            android:singleLine="true"
+            android:id="@+id/search_et"
+            android:gravity="center|start"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/_10sdp"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:hint="Search nearby..."
+            android:layout_toEndOf="@+id/back_btn"
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/clear_icon"/>
+        <ImageView
+            android:tint="@color/colorPrimaryDark"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/clear_icon"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:padding="7dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_clear"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:contentDescription="@string/todo" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/current_loction_rel"
+        android:layout_below="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <TextView
+            android:padding="@dimen/_5sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:background="@drawable/login_now_btn"
+            android:id="@+id/loca_cat_tv"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textSize="@dimen/_10sdp"
+            android:layout_alignParentStart="true"
+            android:text="@string/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:tint="@color/colorPrimary"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/current_icon"
+            android:padding="8dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_location"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp" />
+    </RelativeLayout>
+    <View
+        android:layout_below="@+id/current_loction_rel"
+        android:id="@+id/clr_bottom_line"
+        android:background="@color/grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:id="@+id/show_cat_tv"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:padding="@dimen/_6sdp"
+        android:textSize="@dimen/_12sdp"
+        android:layout_below="@+id/clr_bottom_line"
+        android:text="@string/showing_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/showing_categories_recyclerView"
+        android:layout_below="@+id/show_cat_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</RelativeLayout>

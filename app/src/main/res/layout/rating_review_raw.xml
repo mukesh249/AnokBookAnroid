@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_5sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_centerVertical="true"
+        app:civ_border_width="0.2dp"
+        android:src="@color/gray"
+        android:id="@+id/rating_user_pic"
+        app:civ_border_color="@color/gray"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_toEndOf="@+id/rating_user_pic"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/title_date_rel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/rating_user_name"
+                android:text="Dony Roy"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/rating_user_name"
+                android:textSize="@dimen/_9sdp"
+                android:gravity="end"
+                android:id="@+id/rating_user_posteddate_tv"
+                android:layout_toStartOf="@+id/rating_user_date"
+                android:text="Posted On "
+                android:textColor="@color/primaryDark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/_9sdp"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/rating_user_date"
+                android:text="3rd Sep. 2018"
+                android:textColor="@color/gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RatingBar
+
+            android:id="@+id/rating_bar"
+            android:rating="4"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textSize="@dimen/_10sdp"
+            android:id="@+id/rating_user_content"
+            android:text="lour same to dolor sfsdf came to fire free world go to tip tip kind kor cup"
+            android:textColor="@color/gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#f8d241</color>
+    <color name="colorRed">#880000</color>
+    <color name="colorGreen">#026607</color>
+
+    <color name="primary">#3F51B5</color>
+    <color name="primaryDark">#303F9F</color>
+    <color name="accent">#4CAF50</color>
+    <color name="primaryText">#212121</color>
+    <color name="secondaryText">#727272</color>
+    <color name="light_black">#55000000</color>
+    <color name="new_color">#2c4051</color>
+
+    <!--<color name="colorPrimary">#13499f</color>-->
+    <!--<color name="colorPrimaryDark">#002E7E</color>-->
+    <!--<color name="colorAccent">#FFC107</color>-->
+    <color name="white">#FFFFFF</color>
+    <color name="white_1">#F8F7F7</color>
+    <color name="light_grey">#DBDBDB</color>
+    <color name="grey">#C5C5C5</color>
+    <color name="dark_gray">#575757</color>
+    <color name="yellow">#f8d241</color>
+    <color name="black">#000000</color>
+    <color name="fb_bc">#3a559f</color>
+    <color name="g_bc">#dd4b39</color>
+    <color name="lnwp">#332e2e</color>
+
+    <color name="tedbottompicker_camera">#000</color>
+    <color name="tedbottompicker_gallery">#ccc</color>
+    <color name="tedbottompicker_selected">#f0f0f0</color>
+    <color name="tedbottompicker_white">#ffffff</color>
+</resources>

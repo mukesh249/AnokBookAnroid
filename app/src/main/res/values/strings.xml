@@ -1,0 +1,208 @@
+<resources>
+    <string name="app_name">Anok Books</string>
+    <string name="api_hiting">Please wait…</string>
+    <string name="network_error_msg">Sorry! Not connected to internet</string>
+    <string name="camera_permission_confirmation">This app demonstrates the usage of CameraView. In order to do that, it needs permission to access camera.</string>
+    <string name="camera_permission_not_granted">Camera app cannot do anything without camera permission.</string>
+    <string name="picture_taken">Picture taken</string>
+    <string name="aspect_ratio">Aspect ratio</string>
+    <string name="switch_flash">Switch flash</string>
+    <string name="switch_camera">Switch camera</string>
+    <string name="flash_auto">Flash auto</string>
+    <string name="flash_off">Flash off</string>
+    <string name="flash_on">Flash on</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="no_select">No Select</string>
+    <string name="let_s_start">Let\'s Start</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="to_start_buy">To Start Buy</string>
+    <string name="selling"><![CDATA[& Selling]]></string>
+    <string name="give_books_on_rent"><![CDATA[& give books on rent]]></string>
+    <string name="to_take">To take</string>
+    <string name="log_in_with_facebook">Log in with facebook</string>
+    <string name="log_in_with_google">Log in with Google</string>
+    <string name="log_in_with_phone">Log in with Phone</string>
+    <string name="already_have_a_email_account">already have a email account?</string>
+    <string name="log_in_now">Log in Now</string>
+    <string name="by_continuing_you_agree_to_terms_and_conditions">By continuing. you agree to terms and conditions</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="accept_terms_and_condition">Accept terms and condition</string>
+    <string name="password">Password</string>
+    <string name="regis">Regis</string>
+    <string name="tration">tration</string>
+    <string name="name">Name</string>
+    <string name="email_address">Email address</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="already_member_login">Already member? Login</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="verification">Verification</string>
+    <string name="not_received_resend_otp">Not received? Resend OTP</string>
+    <string name="verify">Verify</string>
+    <string name="create_account">Create Account</string>
+    <string name="enter_4_digit_otp">Enter 4 digit OTP</string>
+    <string name="auto_detect_location">Auto Detect Location</string>
+    <string name="todo">TODO</string>
+    <string name="showing_categories">Showing Categories</string>
+    <string name="all_categories">All Categories</string>
+
+    <string-array name="sort_array">
+        <item>Short by</item>
+        <item>Low to High</item>
+        <item>High to Low</item>
+        <item>Near to Far</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="location">Location</string>
+    <string name="street">Street</string>
+    <string name="landmark">Landmark</string>
+    <string name="submit">Submit</string>
+    <string name="name_of_book">Name of book</string>
+    <string name="author_name">Author name</string>
+    <string name="description">Description</string>
+    <string name="number_of_pages">Number of pages</string>
+    <string name="mrp">MRP</string>
+    <string name="publication_edition">Publication edition</string>
+    <string name="address">Address</string>
+    <string name="contact_number">Contact number</string>
+    <string name="alternate_contact_number">Alternate contact number</string>
+    <string name="view_profile">View Profile</string>
+    <string name="book_holder_system_id">Book holder system id</string>
+    <string name="book_detail">Book Detail</string>
+    <string name="publication">Publication</string>
+    <string name="security_charge">Security charge</string>
+    <string name="review">Review</string>
+    <string name="share">Share</string>
+    <string name="report">Report</string>
+    <string name="filter">Filters</string>
+    <string name="categories">Categories</string>
+    <string name="distance">Distance</string>
+    <string name="price">Price</string>
+    <string name="rest">Rest</string>
+    <string name="apply">Apply</string>
+    <string name="my_profile">My Profile</string>
+    <string name="my_wallet">My wallet</string>
+    <string name="setting">Setting</string>
+    <string name="faq">FAQ</string>
+    <string name="help">Help</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="received">Received</string>
+    <string name="given">Given</string>
+    <string name="request_for_a_book">Request for a book</string>
+    <string name="requests">Requests</string>
+    <string name="rent">Rent</string>
+    <string name="buy">Buy</string>
+    <string name="check_rent">Check rent</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_contact_number">Enter Contact Number</string>
+    <string name="enter_message">Enter Message</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_preferred_categories">Change Preferred Categories</string>
+    <string name="change_exam_preparing_for">Change Exam Preparing For</string>
+
+    <string-array name="no">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+    <string-array name="days_array">
+        <item>days</item>
+        <item>week</item>
+        <item>month</item>
+    </string-array>
+
+    <string name="tedbottompicker_title">Select Image</string>
+    <string name="no_image">No Image</string>
+    <string name="done">Done</string>
+
+
+    <string name="select_max_count">Already %1$d images selected</string>
+    <string name="select_min_count">You have to choice %1$d images</string>
+    <string name="swipe_up_for_gallery">Swipe Up For Gallery</string>
+    <string name="swipe_down_for_camera">Swipe Down For Camera</string>
+    <string name="font_awesome">fonts/FontAwesome.otf</string>
+    <string name="up">up</string>
+    <string name="rent_7_days">Rent 7 days</string>
+    <string name="enter_number_of_days_week_month">Enter number of days/week/month</string>
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="rent_estimation">Rent Estimation</string>
+    <string name="cost_estimation">Cost Estimation</string>
+    <string name="selling_price_inr">Selling price: </string>
+    <string name="including_service_taxes">" including service taxes"</string>
+    <string name="estimated_rent_inr">"Estimated rent INR "</string>
+    <string name="gps_setting">GPS is settings</string>
+    <string name="gps_setting_menu">GPS is not enabled. Do you want to go to settings menu?</string>
+    <string name="settings">Settings</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="add_money_to_wallet">Add Money to Wallet</string>
+    <string name="transaction_history">Transaction History</string>
+    <string name="rented">Rented</string>
+    <string name="posted">Posted</string>
+    <string name="rating_review">Rating Review</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="book_name">Book Name</string>
+    <string name="enter_book_name">Enter Book Name</string>
+    <string name="enter_author_name">Enter Author Name</string>
+    <string name="enter_publisher_name">Enter Publisher Name</string>
+    <string name="enter_current_password">Enter Current Password</string>
+    <string name="enter_new_password">Enter New Password</string>
+    <string name="enter_page_no">Enter number of pages on book</string>
+    <string name="enter_mrp">Enter MRP</string>
+    <string name="enter_publication">Enter Publication Year</string>
+    <string name="enter_location_a">Enter Location</string>
+    <string name="enter_address">Enter Address</string>
+    <string name="enter_landmark">Enter Landmark</string>
+    <string name="enter_confirm_new_password">Enter Confirm New Password</string>
+
+    <string name="name_required">Please enter name</string>
+    <string name="mobile_required">Please enter mobile number</string>
+    <string name="email_address_required">Please enter email</string>
+    <string name="password_required">Please enter your password</string>
+    <string name="password_too_short">password length should be 6 character</string>
+    <string name="confirm_password_required">Please enter your confirm password</string>
+    <string name="pass_and_con_pass_not_match">Password and confirm password not match</string>
+    <string name="email_not_valid">Please enter valid email address</string>
+    <string name="opt_required">Please enter opt</string>
+    <string name="mobile">Mobile</string>
+    <string name="number">" Number"</string>
+    <string name="forgot">Forgot</string>
+    <string name="logout">Logout</string>
+    <string name="ans">Ans.</string>
+    <string name="sent">Sent</string>
+    <string name="requester_details">Requester Details</string>
+    <string name="transaction_process">Transaction Process</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="view_requester_details">View Requester Details</string>
+    <string name="contact_to_requester">Contact to Requester</string>
+    <string name="effective_start_date">Effective Start Date</string>
+    <string name="effective_end_date">Effective End Date</string>
+    <string name="book_received">Book Received</string>
+    <string name="owner_details">Owner Details</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="contact_to_owner">Contact to Owner</string>
+    <string name="view_owner_detail">View Owner Detail</string>
+    <string name="book_return">Book Return</string>
+    <string name="extend_duration">Extend Duration</string>
+    <string name="pending_payment_from_requester">Pending payment from Requester</string>
+    <string name="pending_approval_from_book_owner">Pending Approval from Book Owner</string>
+    <string name="pass_must_6">Password must have atleast 8 digit with one character and special character</string>
+    <string name="enter_ammount_to_add_on_wallet">Enter Amount\n To Add On Wallet</string>
+    <string name="enter_ammount">Enter Amount</string>
+    <string name="valid_mobile">Please enter valid mobile number</string>
+    <string name="search_address">Search Address...</string>
+    <string name="selling_price">Selling Price</string>
+</resources>

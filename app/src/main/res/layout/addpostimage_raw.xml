@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/_5sdp"
+    android:id="@+id/pe_pic_lin1"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/gray_border_round"
+    android:layout_width="110dp"
+    android:layout_height="110dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.joooonho.SelectableRoundedImageView
+        android:id="@+id/image1"
+        android:layout_margin="2dp"
+        app:sriv_left_top_corner_radius="@dimen/_6sdp"
+        app:sriv_right_top_corner_radius="@dimen/_6sdp"
+        app:sriv_left_bottom_corner_radius="@dimen/_6sdp"
+        app:sriv_right_bottom_corner_radius="@dimen/_6sdp"
+        android:tint="@color/dark_gray"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_person"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

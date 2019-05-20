@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/_5sdp"
+    android:id="@+id/pe_pic_lin1"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/gray_border_round"
+    android:layout_width="110dp"
+    android:layout_height="110dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.joooonho.SelectableRoundedImageView
+        android:background="@color/light_grey"
+        android:id="@+id/image1"
+        android:layout_margin="2dp"
+        app:sriv_left_top_corner_radius="@dimen/_6sdp"
+        app:sriv_right_top_corner_radius="@dimen/_6sdp"
+        app:sriv_left_bottom_corner_radius="@dimen/_6sdp"
+        app:sriv_right_bottom_corner_radius="@dimen/_6sdp"
+        android:src="@drawable/ic_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <ImageView
+        android:id="@+id/cross_icon"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/cross"
+        android:layout_width="25dp"
+        android:layout_height="25dp" />
+</RelativeLayout>

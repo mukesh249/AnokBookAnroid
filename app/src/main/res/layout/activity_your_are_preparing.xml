@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".Activites.YourArePreparing">
+
+    <RelativeLayout
+        android:id="@+id/totake_tv"
+        android:transitionName="terma_trans"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/to_start_but_tv"
+            android:text="You are "
+            android:background="@color/yellow"
+            android:paddingStart="@dimen/text_tv_pading"
+            android:paddingEnd="0dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/_15sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_toEndOf="@id/to_start_but_tv"
+            android:text=" Preparing"
+            android:paddingEnd="@dimen/text_tv_pading"
+            android:paddingStart="0dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/you_are_perparing_recyclerview"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_above="@+id/bottom_ur_pre"
+        android:layout_below="@+id/totake_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/bottom_ur_pre"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:transitionName="Check_trans"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:id="@+id/btn_skip"
+            android:text="@string/skip"
+            android:background="@drawable/login_now_btn"
+            android:paddingStart="@dimen/text_tv_pading"
+            android:paddingEnd="0dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:textColor="@color/yellow"
+            android:textSize="@dimen/text_normal_size"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp" />
+        <Button
+            android:transitionName="btn_trans"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/btn_nxt"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/btn_yellow"
+            android:text="@string/next"
+            android:paddingEnd="@dimen/text_tv_pading"
+            android:paddingStart="0dp"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_normal_size"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp" />
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

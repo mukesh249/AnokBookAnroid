@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "608442482580",
+    "firebase_url": "https://anokbook.firebaseio.com",
+    "project_id": "anokbook",
+    "storage_bucket": "anokbook.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608442482580:android:361eb4b5c73a88d7",
+        "android_client_info": {
+          "package_name": "com.anokbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608442482580-ntnl23btui9nuif8ro1nkv1i6cbg1tpa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anokbook",
+            "certificate_hash": "2c8d0822274ea82fbf62ffdf274d88763f750731"
+          }
+        },
+        {
+          "client_id": "608442482580-afsu72eb02c4nimk47ni9q680325gm1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKq7dXZb0QKOQq31rGMF6oW189Bn64G_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608442482580-afsu72eb02c4nimk47ni9q680325gm1r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="@dimen/_2sdp"
+    app:cardElevation="@dimen/_2sdp"
+    android:layout_height="@dimen/_70sdp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:transitionName="Book_image"
+            android:scaleType="fitXY"
+            android:src="@color/light_grey"
+            android:id="@+id/book_image"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:visibility="gone"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/heart"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:padding="@dimen/_4sdp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp" />
+        <RelativeLayout
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_toEndOf="@+id/book_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/dasff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:visibility="gone"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/heart"
+                    android:padding="3dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+                <TextView
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/rent_days_tv"
+                    android:text="@string/rent_7_days"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:transitionName="Toolbar_trans"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/book_name"
+                    android:text="Any book"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_above="@+id/rented_date_tv"
+                android:id="@+id/author_name_tv"
+                android:text="How is Josh??"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginEnd="@dimen/_3sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_above="@+id/rented_date_tv"
+                android:id="@+id/posted_tv"
+                android:text="Request on"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_below="@+id/author_name_tv"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:transitionName="Book_name"
+                    android:text="Total Rent: "
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/total_rent_tv"
+                    android:transitionName="Book_name"
+                    android:hint="500/-"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+                android:layout_marginEnd="@dimen/_3sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/rented_date_tv"
+                android:text="2nd jan 2019"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

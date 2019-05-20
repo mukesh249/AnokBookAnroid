@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_5sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_centerVertical="true"
+        app:civ_border_width="0.2dp"
+        android:src="@color/gray"
+        android:id="@+id/notification_book_image"
+        app:civ_border_color="@color/gray"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_toEndOf="@+id/notification_book_image"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/title_date_rel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/notification_title"
+                android:layout_below="@+id/notification_time"
+                android:text="Message Title"
+                android:textSize="@dimen/_11sdp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/_9sdp"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/notification_time"
+                android:text="3rd Sep. 2018"
+                android:textColor="@color/primaryDark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <TextView
+            android:textSize="@dimen/_10sdp"
+            android:id="@+id/notification_message"
+            android:text="lour same to dolor sfsdf came to fire free world go to tip tip kind kor cup"
+            android:textColor="@color/gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</RelativeLayout>
