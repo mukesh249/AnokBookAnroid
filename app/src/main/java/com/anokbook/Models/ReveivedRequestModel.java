@@ -3,6 +3,7 @@ package com.anokbook.Models;
 import java.io.Serializable;
 
 public class ReveivedRequestModel implements Serializable {
+
     String id,user_id,to_id,status,duration,author,book_name,book_image,requester_name,created_date,rent;
 
     public String getId() {

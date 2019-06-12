@@ -135,6 +135,7 @@ public class OptVerification extends AppCompatActivity implements WebCompleteTas
                     } else {
                         Toast.makeText(OptVerification.this, jsonObject.optString("message"), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(OptVerification.this, Login.class);
+
                         Pair[] pairs = new Pair[3];
                         pairs[0] = new Pair<View, String>(logo, "logo_trans");
                         pairs[1] = new Pair<View, String>(verify_btn, "btn_trans");

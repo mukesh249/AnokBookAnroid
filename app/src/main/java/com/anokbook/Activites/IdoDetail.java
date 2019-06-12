@@ -30,6 +30,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anokbook.Api.RequestCode;
+import com.anokbook.Api.WebCompleteTask;
+import com.anokbook.Api.WebTask;
+import com.anokbook.Api.WebUrls;
+import com.anokbook.Common.Constrants;
+import com.anokbook.Common.SharedPrefManager;
+import com.anokbook.R;
 import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
@@ -46,68 +53,88 @@ import java.util.Timer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.anokbook.Api.RequestCode;
-import com.anokbook.Api.WebCompleteTask;
-import com.anokbook.Api.WebTask;
-import com.anokbook.Api.WebUrls;
-import com.anokbook.Common.Constrants;
-import com.anokbook.Common.SharedPrefManager;
-import com.anokbook.R;
 
 public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
 
+    private static ArrayList<String> imageId = new ArrayList<>();
+    private static IdoDetail mInstance;
+    final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
+    final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
     @BindView(R.id.ido_detail__toolbar)
     Toolbar ido_detail__toolbar;
     @BindView(R.id.slidera)
     ViewPager slidera;
     @BindView(R.id.dots_indicator)
     DotsIndicator dotsIndicator;
-
-    private ImageView[] dots;
-
     Timer timer;
-    final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
-    final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
-
-    @BindView(R.id.map_image_rel) RelativeLayout map_image_rel;
-    @BindView(R.id.buy_bottom_tv) TextView buy_tv;
-    @BindView(R.id.rent_bottom_tv) TextView rent_tv;
-    @BindView(R.id.che_rel) RelativeLayout che_rel;
-    @BindView(R.id.view_profile) TextView view_profile;
-    @BindView(R.id.book_name_tv) TextView book_name_tv;
-    @BindView(R.id.book_publication_tv) TextView book_publication_tv;
-    @BindView(R.id.book_author_tv) TextView book_author_tv;
-    @BindView(R.id.book_no_of_pages_tv) TextView book_no_of_pages_tv;
-    @BindView(R.id.mrp_tv) TextView mrp_tv;
-    @BindView(R.id.security_tv) TextView security_tv;
-    @BindView(R.id.book_categories_tv) TextView book_categories_tv;
-    @BindView(R.id.address_full) TextView address_full;
-    @BindView(R.id.book_description_tv) TextView book_description_tv;
-    @BindView(R.id.favorite_icon) SparkButton favorite_icon;
-    @BindView(R.id.delete_icon_post) ImageView delete_icon_post;
-    @BindView(R.id.share_tv) TextView share_tv;
-    @BindView(R.id.review_tv) TextView review_tv;
-    @BindView(R.id.report_tv)  TextView report_tv;
-    @BindView(R.id.address_title) TextView address_title;
-    @BindView(R.id.progress_horizontal) ProgressBar progress_horizontal;
-    @BindView(R.id.nestedscroll) NestedScrollView nestedscroll;
-    @BindView(R.id.bottom) LinearLayout bottom;
+    @BindView(R.id.map_image_rel)
+    RelativeLayout map_image_rel;
+    @BindView(R.id.buy_bottom_tv)
+    TextView buy_tv;
+    @BindView(R.id.rent_bottom_tv)
+    TextView rent_tv;
+    @BindView(R.id.che_rel)
+    RelativeLayout che_rel;
+    @BindView(R.id.view_profile)
+    TextView view_profile;
+    @BindView(R.id.book_name_tv)
+    TextView book_name_tv;
+    @BindView(R.id.book_publication_tv)
+    TextView book_publication_tv;
+    @BindView(R.id.book_author_tv)
+    TextView book_author_tv;
+    @BindView(R.id.book_no_of_pages_tv)
+    TextView book_no_of_pages_tv;
+    @BindView(R.id.mrp_tv)
+    TextView mrp_tv;
+    @BindView(R.id.security_tv)
+    TextView security_tv;
+    @BindView(R.id.book_categories_tv)
+    TextView book_categories_tv;
+    @BindView(R.id.address_full)
+    TextView address_full;
+    @BindView(R.id.book_description_tv)
+    TextView book_description_tv;
+    @BindView(R.id.favorite_icon)
+    SparkButton favorite_icon;
+    @BindView(R.id.delete_icon_post)
+    ImageView delete_icon_post;
+    @BindView(R.id.share_tv)
+    TextView share_tv;
+    @BindView(R.id.review_tv)
+    TextView review_tv;
+    @BindView(R.id.report_tv)
+    TextView report_tv;
+    @BindView(R.id.address_title)
+    TextView address_title;
+    @BindView(R.id.progress_horizontal)
+    ProgressBar progress_horizontal;
+    @BindView(R.id.nestedscroll)
+    NestedScrollView nestedscroll;
+    @BindView(R.id.bottom)
+    LinearLayout bottom;
     TextView rent_estimation_price;
     String hint;
-    private String book_id,user_id,recuriter_id;
-    private static ArrayList<String> imageId = new ArrayList<>();
-    boolean day,week,month;
-    String rent_string,security_charge_string,service_tax_string,total_amount,buyPrice,serive_tax;
+    boolean day, week, month;
+    String rent_string, security_charge_string, service_tax_string, total_amount, buyPrice, serive_tax;
     int days = 1;
-    private static IdoDetail mInstance;
+    int dotscount;
+    int currentPage = 0;
+    private ImageView[] dots;
+    private String book_id, user_id, recuriter_id;
     private AlertDialog alertDialog;
     private AlertDialog buyDialog;
-    private double latitude,longitude;
+    private double latitude, longitude;
+
+    public static IdoDetail getInstance() {
+        return mInstance;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ido_detail);
-        ButterKnife.bind(this,this);
+        ButterKnife.bind(this, this);
         mInstance = this;
 
         progress_horizontal.setVisibility(View.VISIBLE);
@@ -119,14 +146,14 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
         view_profile.setVisibility(View.VISIBLE);
         view_profile.setText(getString(R.string.view_profile));
 //        imageId = new int[]{R.drawable.map_image, R.drawable.map_image, R.drawable.map_image, R.drawable.map_image};
-        book_id = getIntent().getExtras().getString("book_id","");
-        user_id = getIntent().getExtras().getString("user_id","");
-        if (user_id.compareTo(SharedPrefManager.getUserID(Constrants.UserId))==0){
+        book_id = getIntent().getExtras().getString("book_id", "");
+        user_id = getIntent().getExtras().getString("user_id", "");
+        if (user_id.compareTo(SharedPrefManager.getUserID(Constrants.UserId)) == 0) {
             buy_tv.setVisibility(View.GONE);
             rent_tv.setVisibility(View.GONE);
             view_profile.setText("Edit Post");
             favorite_icon.setVisibility(View.GONE);
-        }else if (getIntent().getExtras().getString("Activity","").compareTo("seller_profile")==0){
+        } else if (getIntent().getExtras().getString("Activity", "").compareTo("seller_profile") == 0) {
             view_profile.setVisibility(View.GONE);
         }
 //        Log.d("book_id_requied",book_id);
@@ -204,10 +231,10 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
         view_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (view_profile.getText().toString().compareTo(getString(R.string.view_profile))==0){
-                    startActivity(new Intent(IdoDetail.this,SellerProfile.class).putExtra("seller_id",user_id));
-                }else {
-                    startActivity(new Intent(IdoDetail.this,EditPost.class).putExtra("user_book_id",book_id));
+                if (view_profile.getText().toString().compareTo(getString(R.string.view_profile)) == 0) {
+                    startActivity(new Intent(IdoDetail.this, SellerProfile.class).putExtra("seller_id", user_id));
+                } else {
+                    startActivity(new Intent(IdoDetail.this, EditPost.class).putExtra("user_book_id", book_id));
                 }
             }
         });
@@ -227,11 +254,11 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
                     String sharemsg = "\nLet me recommend you this application\n\n";
-                    sharemsg+="https://play.google.com/store/apps/details?id=babbabazrii.com.bababazri";
-                    intent.putExtra(Intent.EXTRA_TEXT,sharemsg);
-                    startActivity(Intent.createChooser(intent,"Choose one"));
+                    sharemsg += "https://play.google.com/store/apps/details?id=babbabazrii.com.bababazri";
+                    intent.putExtra(Intent.EXTRA_TEXT, sharemsg);
+                    startActivity(Intent.createChooser(intent, "Choose one"));
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -250,78 +277,21 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
     @Override
     protected void onRestart() {
         super.onRestart();
-        user_id = getIntent().getExtras().getString("user_id","");
-        if (user_id.compareTo(SharedPrefManager.getUserID(Constrants.UserId))==0){
+        user_id = getIntent().getExtras().getString("user_id", "");
+        if (user_id.compareTo(SharedPrefManager.getUserID(Constrants.UserId)) == 0) {
             recreate();
         }
 //        book_id = getIntent().getExtras().getString("book_id","");
 //        user_id = getIntent().getExtras().getString("user_id","");
 //        BookDetailMethod();
     }
-    public static IdoDetail getInstance(){
-        return mInstance;
-    }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
-        if (timer!=null)
-        timer.cancel();
+        if (timer != null)
+            timer.cancel();
         return true;
-    }
-    public class CustomAdapter extends PagerAdapter {
-
-        private Activity activity;
-        private ArrayList<String> imagesArray;
-        private String[] namesArray;
-
-        public CustomAdapter(Activity activity, ArrayList<String> imagesArray) {
-
-            this.activity = activity;
-            this.imagesArray = imagesArray;
-            this.namesArray = namesArray;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, final int position) {
-
-            LayoutInflater inflater = ((Activity)activity).getLayoutInflater();
-
-            View viewItem = inflater.inflate(R.layout.slider_item, container, false);
-            ImageView imageView = (ImageView) viewItem.findViewById(R.id.slidera_image);
-
-//            imageView.setImageURI(Uri.parse(imagesArray.get(position)));
-            Glide.with(IdoDetail.this).load(imagesArray.get(position))
-                    .placeholder(R.color.light_grey).fitCenter()
-                    .into(imageView);
-            ((ViewPager)container).addView(viewItem);
-
-            viewItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Popupmethod(position);
-                }
-            });
-
-            return viewItem;
-        }
-
-        @Override
-        public int getCount() {
-            // TODO Auto-generated method stub
-            return imagesArray.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            // TODO Auto-generated method stub
-            return view == ((View)object);
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            // TODO Auto-generated method stub
-            ((ViewPager) container).removeView((View) object);
-        }
     }
 
     public void RentPopupmethod() {
@@ -434,7 +404,7 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
 
 //                        rent_estimation_price.setText(" " + total_amount);
                     } else if (week && value >= 1 && value < 11) {
-                        days = 7*value;
+                        days = 7 * value;
                         RentCalculationMethod(days);
 //                        security_charge = Double.parseDouble(mrp_tv.getText().toString().trim())/2;
 //                        rent = Rent(days,security_charge);
@@ -451,7 +421,7 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
 
 //                        rent_estimation_price.setText(" " + total_amount);
                     } else if (month && value >= 1 && value < 3) {
-                        days = 30*value;
+                        days = 30 * value;
                         RentCalculationMethod(days);
 //                        security_charge = Double.parseDouble(mrp_tv.getText().toString().trim())/2;
 //                        rent = Rent(days,security_charge);
@@ -485,8 +455,8 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
                         dataObj.put("to_id", recuriter_id);
                         dataObj.put("book_id", book_id);
                         dataObj.put("duration", days + "");
-                        dataObj.put("service_charge",service_tax_string );
-                        dataObj.put("security_charge",security_charge_string );
+                        dataObj.put("service_charge", service_tax_string);
+                        dataObj.put("security_charge", security_charge_string);
                         dataObj.put("rent", rent_string);
 
                         JSONObject resqObj = new JSONObject();
@@ -507,39 +477,41 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
         alertDialog.setView(dialog);
         alertDialog.show();
     }
-    private void Popupmethod(int pos){
+
+    private void Popupmethod(int pos) {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.activity_image_perview);
 
-        ImageView full_image_cancel= (ImageView) dialog.findViewById(R.id.full_image_cancel);
-        ViewPager full_image_viewpage = (ViewPager)dialog.findViewById(R.id.full_image_viewpage);
-        DotsIndicator dotsin_vi = (DotsIndicator)dialog.findViewById(R.id.dots_indicator);
+        ImageView full_image_cancel = (ImageView) dialog.findViewById(R.id.full_image_cancel);
+        ViewPager full_image_viewpage = (ViewPager) dialog.findViewById(R.id.full_image_viewpage);
+        DotsIndicator dotsin_vi = (DotsIndicator) dialog.findViewById(R.id.dots_indicator);
         full_image_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        PagerAdapter adapter = new FullImageAdapter(IdoDetail.this,imageId);
+        PagerAdapter adapter = new FullImageAdapter(IdoDetail.this, imageId);
         full_image_viewpage.setAdapter(adapter);
         dotsin_vi.setViewPager(full_image_viewpage);
 
         dialog.show();
     }
-    public void BuyPopupmethod(){
+
+    public void BuyPopupmethod() {
         buyDialog = new AlertDialog.Builder(IdoDetail.this).create();
         View view = getLayoutInflater().inflate(R.layout.buy_popup, null);
 
 
-        final TextView cost_estimation_price = (TextView)view.findViewById(R.id.cost_estimation_price);
+        final TextView cost_estimation_price = (TextView) view.findViewById(R.id.cost_estimation_price);
 
-        final Button request_for_book_tv  = (Button)view.findViewById(R.id.request_for_book_tv);
-        final TextView total_tv = (TextView)view.findViewById(R.id.total_tv);
-        final TextView service_tax = (TextView)view.findViewById(R.id.service_tax_tv);
+        final Button request_for_book_tv = (Button) view.findViewById(R.id.request_for_book_tv);
+        final TextView total_tv = (TextView) view.findViewById(R.id.total_tv);
+        final TextView service_tax = (TextView) view.findViewById(R.id.service_tax_tv);
         service_tax.setText(serive_tax);
         cost_estimation_price.setText(String.format(" %s", Double.valueOf(buyPrice)));
-        total_amount = Double.valueOf(buyPrice) + Double.parseDouble(service_tax.getText().toString().trim())+"";
-        Log.d("total_amount",total_amount);
+        total_amount = Double.valueOf(buyPrice) + Double.parseDouble(service_tax.getText().toString().trim()) + "";
+        Log.d("total_amount", total_amount);
         total_tv.setText(String.format("%s INR", Double.valueOf(buyPrice) + Double.parseDouble(service_tax.getText().toString().trim())));
         request_for_book_tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -548,26 +520,26 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
 //                    no_day_w_mon.setError(hint);
 //                    no_day_w_mon.requestFocus();
 //                } else {
-                    try {
-                        JSONObject dataObj = new JSONObject();
-                        dataObj.put("user_id", SharedPrefManager.getUserID(Constrants.UserId));
-                        dataObj.put("to_id", recuriter_id);
-                        dataObj.put("book_id", book_id);
-                        dataObj.put("tax",serive_tax);
-                        dataObj.put("mrp",total_amount);
+                try {
+                    JSONObject dataObj = new JSONObject();
+                    dataObj.put("user_id", SharedPrefManager.getUserID(Constrants.UserId));
+                    dataObj.put("to_id", recuriter_id);
+                    dataObj.put("book_id", book_id);
+                    dataObj.put("tax", serive_tax);
+                    dataObj.put("mrp", total_amount);
 
-                        JSONObject resqObj = new JSONObject();
-                        resqObj.put("method", "api_buybook_request");
-                        resqObj.put("data", dataObj);
+                    JSONObject resqObj = new JSONObject();
+                    resqObj.put("method", "api_buybook_request");
+                    resqObj.put("data", dataObj);
 
-                        HashMap objectNew = new HashMap();
-                        objectNew.put("request", resqObj.toString());
-                        Log.d("api_book_request_data", objectNew.toString());
-                        new WebTask(IdoDetail.this, WebUrls.BASE_URL, objectNew, IdoDetail.this, RequestCode.CODE_BuyRequest, 1);
+                    HashMap objectNew = new HashMap();
+                    objectNew.put("request", resqObj.toString());
+                    Log.d("api_book_request_data", objectNew.toString());
+                    new WebTask(IdoDetail.this, WebUrls.BASE_URL, objectNew, IdoDetail.this, RequestCode.CODE_BuyRequest, 1);
 
-                    } catch (JSONException e) {
+                } catch (JSONException e) {
 
-                    }
+                }
 //                }
             }
         });
@@ -576,66 +548,70 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
         buyDialog.setView(view);
         buyDialog.show();
     }
-    public void RentCalculationMethod(int daysi){
+
+    public void RentCalculationMethod(int daysi) {
         try {
             JSONObject dataObj = new JSONObject();
             dataObj.put("mrp", mrp_tv.getText());
-            dataObj.put("days",daysi+"");
+            dataObj.put("days", daysi + "");
 
             JSONObject resqObj = new JSONObject();
-            resqObj.put("method","rent_calculation");
-            resqObj.put("data",dataObj);
+            resqObj.put("method", "rent_calculation");
+            resqObj.put("data", dataObj);
 
             HashMap objectNew = new HashMap();
-            objectNew.put("request",resqObj.toString());
-            Log.d("rent_calculation_data",objectNew.toString());
-            new WebTask(IdoDetail.this, WebUrls.BASE_URL,objectNew,IdoDetail.this, RequestCode.CODE_Rent_Calculation,5);
-        }catch (JSONException e){
+            objectNew.put("request", resqObj.toString());
+            Log.d("rent_calculation_data", objectNew.toString());
+            new WebTask(IdoDetail.this, WebUrls.BASE_URL, objectNew, IdoDetail.this, RequestCode.CODE_Rent_Calculation, 5);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-    public void BookDetailMethod(String book_i){
+
+    public void BookDetailMethod(String book_i) {
 //        book_id = getIntent().getExtras().getString("book_id","");
         try {
             JSONObject dataObj = new JSONObject();
             dataObj.put("book_id", book_i);
             dataObj.put("user_id", SharedPrefManager.getUserID(Constrants.UserId));
-            dataObj.put("lat",Nearbybooks.latti+"");
-            dataObj.put("long",Nearbybooks.longi+"");
+            dataObj.put("lat", Nearbybooks.latti + "");
+            dataObj.put("long", Nearbybooks.longi + "");
             JSONObject resqObj = new JSONObject();
-            resqObj.put("method","book_viewby_bookid");
-            resqObj.put("data",dataObj);
+            resqObj.put("method", "book_viewby_bookid");
+            resqObj.put("data", dataObj);
 
             HashMap objectNew = new HashMap();
-            objectNew.put("request",resqObj.toString());
-            Log.d("book_viewby_bookid_data",objectNew.toString());
-            new WebTask(IdoDetail.this, WebUrls.BASE_URL,objectNew,IdoDetail.this, RequestCode.CODE_Book_Viewby_Bookid,5);
-        }catch (JSONException e){
+            objectNew.put("request", resqObj.toString());
+            Log.d("book_viewby_bookid_data", objectNew.toString());
+            new WebTask(IdoDetail.this, WebUrls.BASE_URL, objectNew, IdoDetail.this, RequestCode.CODE_Book_Viewby_Bookid, 5);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-    private void LikeMethod(){
+
+    private void LikeMethod() {
         try {
             JSONObject dataObj = new JSONObject();
             dataObj.put("user_id", SharedPrefManager.getUserID(Constrants.UserId));
-            dataObj.put("recuriter_id",recuriter_id);
-            dataObj.put("book_id",book_id);
+            dataObj.put("recuriter_id", recuriter_id);
+            dataObj.put("book_id", book_id);
 
             JSONObject resqObj = new JSONObject();
-            resqObj.put("method","api_like_books");
-            resqObj.put("data",dataObj);
+            resqObj.put("method", "api_like_books");
+            resqObj.put("data", dataObj);
 
             HashMap objectNew = new HashMap();
-            objectNew.put("request",resqObj.toString());
-            Log.d("api_like_books_data",objectNew.toString());
-            new WebTask(IdoDetail.this, WebUrls.BASE_URL,objectNew,IdoDetail.this, RequestCode.CODE_Like_Books,5);
-        }catch (JSONException e){
+            objectNew.put("request", resqObj.toString());
+            Log.d("api_like_books_data", objectNew.toString());
+            new WebTask(IdoDetail.this, WebUrls.BASE_URL, objectNew, IdoDetail.this, RequestCode.CODE_Like_Books, 5);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
     @Override
     public void onComplete(String response, int taskcode) {
-        Log.d("book_viewby_bookid_res",response);
+        Log.d("book_viewby_bookid_res", response);
         if (RequestCode.CODE_Book_Viewby_Bookid == taskcode) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
@@ -646,11 +622,11 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
                         JSONObject dataobj = dataarray.getJSONObject(i);
                         if (dataobj != null) {
                             book_name_tv.setText(dataobj.optString("book_name"));
-    //                        String date = dataobj.optString("created_at");
-    //                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    //                        Date newdate = simpleDateFormat.parse(date);
-    //                        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM yyyy");
-    //                            user_date.setText("Since " + dateFormat.format(newdate));
+                            //                        String date = dataobj.optString("created_at");
+                            //                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                            //                        Date newdate = simpleDateFormat.parse(date);
+                            //                        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM yyyy");
+                            //                            user_date.setText("Since " + dateFormat.format(newdate));
                             book_name_tv.setText(dataobj.optString("book_name"));
                             book_author_tv.setText(dataobj.optString("author_name"));
                             book_description_tv.setText(dataobj.optString("description"));
@@ -673,36 +649,36 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
 
                             setSupportActionBar(ido_detail__toolbar);
                             String fsd = dataobj.optString("book_name");
-                            String rd = fsd.substring(0,1).toUpperCase();
-                            getSupportActionBar().setTitle(fsd.replaceFirst(fsd.substring(0,1),rd)+"/Price: "+dataobj.optString("mrp")+" INR");
+                            String rd = fsd.substring(0, 1).toUpperCase();
+                            getSupportActionBar().setTitle(fsd.replaceFirst(fsd.substring(0, 1), rd) + "/Price: " + dataobj.optString("mrp") + " INR");
                             //toolbar back button color and icon change
                             final Drawable upArrow = getResources().getDrawable(R.drawable.ic_back);
                             upArrow.setColorFilter(Color.parseColor("#2f3e9e"), PorterDuff.Mode.SRC_ATOP);
                             getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
                             // add back arrow to toolbar
-                            if (getSupportActionBar() != null){
+                            if (getSupportActionBar() != null) {
                                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                                 getSupportActionBar().setDisplayShowHomeEnabled(true);
                             }
 
                             if (dataobj.optString("user_like_status").compareTo("1") == 0) {
                                 favorite_icon.setChecked(true);
-    //                                favorite_icon.setImageDrawable(getDrawable(R.drawable.ic_favorite));
+                                //                                favorite_icon.setImageDrawable(getDrawable(R.drawable.ic_favorite));
                             } else {
                                 favorite_icon.setChecked(false);
-    //                                favorite_icon.setImageDrawable(getDrawable(R.drawable.heart));
+                                //                                favorite_icon.setImageDrawable(getDrawable(R.drawable.heart));
                             }
 
 
                             if (dataobj.optJSONArray("attachment") != null) {
                                 JSONArray attachmentArray = dataobj.optJSONArray("attachment");
                                 imageId.clear();
-    //                                imageId = new String[attachmentArray.length()];
+                                //                                imageId = new String[attachmentArray.length()];
                                 for (int k = 0; k < attachmentArray.length(); k++) {
                                     JSONObject jsonObject1 = attachmentArray.getJSONObject(k);
                                     imageId.add(WebUrls.IMG_BASE_URL + WebUrls.Book_Image_Url + jsonObject1.optString("name"));
-    //                                    imageId[k] =  WebUrls.IMG_BASE_URL+WebUrls.Book_Image_Url+jsonObject1.optString("name");
+                                    //                                    imageId[k] =  WebUrls.IMG_BASE_URL+WebUrls.Book_Image_Url+jsonObject1.optString("name");
                                 }
                                 viewPagerInit();
                             }
@@ -720,22 +696,22 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
                 e.printStackTrace();
             }
         }
-        if (RequestCode.CODE_Like_Books == taskcode){
-            Log.d("api_like_books_res",response);
+        if (RequestCode.CODE_Like_Books == taskcode) {
+            Log.d("api_like_books_res", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                if (jsonObject.optString("status").compareTo("success")==0){
+                if (jsonObject.optString("status").compareTo("success") == 0) {
                     JSONObject dataObj = jsonObject.optJSONObject("data");
-                    if (dataObj.optString("like_status").compareTo("1")==0){
+                    if (dataObj.optString("like_status").compareTo("1") == 0) {
                         favorite_icon.setChecked(true);
 //                        favorite_icon.setImageDrawable(getDrawable(R.drawable.ic_favorite));
                         HomeScreen.getInstance().All_Book_List_Method();
-                    }else {
+                    } else {
                         favorite_icon.setChecked(false);
                         HomeScreen.getInstance().All_Book_List_Method();
 //                        favorite_icon.setImageDrawable(getDrawable(R.drawable.heart));
                     }
-                }else {
+                } else {
 
                 }
             } catch (JSONException e) {
@@ -743,61 +719,59 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
             }
 
         }
-        if (RequestCode.CODE_Book_Request_Api == taskcode){
-            Log.d("api_book_request_res",response);
+        if (RequestCode.CODE_Book_Request_Api == taskcode) {
+            Log.d("api_book_request_res", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                if (jsonObject.optString("status").compareTo("success")==0){
-                    Toast.makeText(this,jsonObject.optString("message"),Toast.LENGTH_SHORT).show();
+                if (jsonObject.optString("status").compareTo("success") == 0) {
+                    Toast.makeText(this, jsonObject.optString("message"), Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
-                }else {
-                    Toast.makeText(this,jsonObject.optString("message"),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, jsonObject.optString("message"), Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
                 }
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        if (RequestCode.CODE_BuyRequest == taskcode){
-            Log.d("Buy_request_res",response);
+        if (RequestCode.CODE_BuyRequest == taskcode) {
+            Log.d("Buy_request_res", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                if (jsonObject.optString("status").compareTo("success")==0){
-                    Toast.makeText(this,jsonObject.optString("message"),Toast.LENGTH_SHORT).show();
+                if (jsonObject.optString("status").compareTo("success") == 0) {
+                    Toast.makeText(this, jsonObject.optString("message"), Toast.LENGTH_SHORT).show();
                     buyDialog.dismiss();
-                }else {
-                    Toast.makeText(this,jsonObject.optString("message"),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, jsonObject.optString("message"), Toast.LENGTH_SHORT).show();
                     buyDialog.dismiss();
                 }
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        if (RequestCode.CODE_Rent_Calculation == taskcode){
-            Log.d("Rent_Calculation_res",response);
+        if (RequestCode.CODE_Rent_Calculation == taskcode) {
+            Log.d("Rent_Calculation_res", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                if (jsonObject.optString("status").compareTo("success")==0){
+                if (jsonObject.optString("status").compareTo("success") == 0) {
                     rent_estimation_price.setText(jsonObject.optJSONObject("data").optString("total_amount"));
                     service_tax_string = jsonObject.optJSONObject("data").optString("service_charge");
                     security_charge_string = jsonObject.optJSONObject("data").optString("security_charge");
                     rent_string = jsonObject.optJSONObject("data").optString("rent");
 
 
-                }else {
-                    Toast.makeText(this,jsonObject.optString("message"),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, jsonObject.optString("message"), Toast.LENGTH_SHORT).show();
                 }
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
 
-
     }
-    int dotscount;
-    int currentPage = 0;
+
     private void viewPagerInit() {
 
         if (imageId != null) {
@@ -860,13 +834,14 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
 //            }, DELAY_MS, PERIOD_MS);
         }
     }
-    public class FullImageAdapter extends PagerAdapter {
+
+    public class CustomAdapter extends PagerAdapter {
 
         private Activity activity;
         private ArrayList<String> imagesArray;
         private String[] namesArray;
 
-        public FullImageAdapter(Activity activity,ArrayList<String> imagesArray){
+        public CustomAdapter(Activity activity, ArrayList<String> imagesArray) {
 
             this.activity = activity;
             this.imagesArray = imagesArray;
@@ -874,23 +849,30 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(ViewGroup container, final int position) {
 
-            LayoutInflater inflater = ((Activity)activity).getLayoutInflater();
+            LayoutInflater inflater = ((Activity) activity).getLayoutInflater();
 
-            View viewItem = inflater.inflate(R.layout.full_image_view, container, false);
-            PhotoView imageView = (PhotoView) viewItem.findViewById(R.id.full_image);
-//            imageView.setImageResource(imagesArray.get(u));
-            Glide.with(IdoDetail.this)
-                    .load(imagesArray.get(position))
+            View viewItem = inflater.inflate(R.layout.slider_item, container, false);
+            ImageView imageView = (ImageView) viewItem.findViewById(R.id.slidera_image);
+
+//            imageView.setImageURI(Uri.parse(imagesArray.get(position)));
+            Glide.with(IdoDetail.this).load(imagesArray.get(position))
+                    .placeholder(R.color.light_grey).fitCenter()
                     .into(imageView);
-            ((ViewPager)container).addView(viewItem);
+            ((ViewPager) container).addView(viewItem);
+
+            viewItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Popupmethod(position);
+                }
+            });
 
             return viewItem;
         }
 
         @Override
-        
         public int getCount() {
             // TODO Auto-generated method stub
             return imagesArray.size();
@@ -899,7 +881,7 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
         @Override
         public boolean isViewFromObject(View view, Object object) {
             // TODO Auto-generated method stub
-            return view == ((View)object);
+            return view == ((View) object);
         }
 
         @Override
@@ -909,6 +891,54 @@ public class IdoDetail extends AppCompatActivity implements WebCompleteTask {
         }
     }
 
+    public class FullImageAdapter extends PagerAdapter {
+
+        private Activity activity;
+        private ArrayList<String> imagesArray;
+        private String[] namesArray;
+
+        public FullImageAdapter(Activity activity, ArrayList<String> imagesArray) {
+
+            this.activity = activity;
+            this.imagesArray = imagesArray;
+            this.namesArray = namesArray;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+
+            LayoutInflater inflater = ((Activity) activity).getLayoutInflater();
+
+            View viewItem = inflater.inflate(R.layout.full_image_view, container, false);
+            PhotoView imageView = (PhotoView) viewItem.findViewById(R.id.full_image);
+//            imageView.setImageResource(imagesArray.get(u));
+            Glide.with(IdoDetail.this)
+                    .load(imagesArray.get(position))
+                    .into(imageView);
+            ((ViewPager) container).addView(viewItem);
+
+            return viewItem;
+        }
+
+        @Override
+
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return imagesArray.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            // TODO Auto-generated method stub
+            return view == ((View) object);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            // TODO Auto-generated method stub
+            ((ViewPager) container).removeView((View) object);
+        }
+    }
 
 
 //    public double Rent(int days,double security_charge){

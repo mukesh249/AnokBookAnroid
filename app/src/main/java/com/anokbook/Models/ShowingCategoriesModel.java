@@ -3,6 +3,7 @@ package com.anokbook.Models;
 import java.io.Serializable;
 
 public class ShowingCategoriesModel implements Serializable {
+
     String name,check,id;
     private boolean isSelected = false;
 
