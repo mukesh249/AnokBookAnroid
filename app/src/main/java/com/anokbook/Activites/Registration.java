@@ -14,13 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.anokbook.Api.RequestCode;
 import com.anokbook.Api.WebCompleteTask;
 import com.anokbook.Api.WebTask;
@@ -29,15 +22,30 @@ import com.anokbook.Common.Constrants;
 import com.anokbook.Common.SharedPrefManager;
 import com.anokbook.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class Registration extends AppCompatActivity implements WebCompleteTask {
 
-    @BindView(R.id.reg_name_et) EditText reg_name_et;
-    @BindView(R.id.reg_mobile_et) EditText reg_mobile_et;
-    @BindView(R.id.reg_email_et) EditText reg_email_et;
-    @BindView(R.id.reg_password_et) EditText reg_password_et;
-    @BindView(R.id.reg_con_password_et)EditText reg_con_passwrod_et;
-    @BindView(R.id.already_tv) TextView already_tv;
-    @BindView(R.id.reg_btn) Button reg_btn;
+    @BindView(R.id.reg_name_et)
+    EditText reg_name_et;
+    @BindView(R.id.reg_mobile_et)
+    EditText reg_mobile_et;
+    @BindView(R.id.reg_email_et)
+    EditText reg_email_et;
+    @BindView(R.id.reg_password_et)
+    EditText reg_password_et;
+    @BindView(R.id.reg_con_password_et)
+    EditText reg_con_passwrod_et;
+    @BindView(R.id.already_tv)
+    TextView already_tv;
+    @BindView(R.id.reg_btn)
+    Button reg_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +58,7 @@ public class Registration extends AppCompatActivity implements WebCompleteTask {
         getWindow().setBackgroundDrawableResource(R.drawable.bg);
         setContentView(R.layout.activity_registration);
 
-        ButterKnife.bind(this,this);
+        ButterKnife.bind(this, this);
 
         already_tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,38 +75,38 @@ public class Registration extends AppCompatActivity implements WebCompleteTask {
         });
     }
 
-    private void RegistrationMethod(){
-        if (TextUtils.isEmpty(reg_name_et.getText().toString().trim())){
+    private void RegistrationMethod() {
+        if (TextUtils.isEmpty(reg_name_et.getText().toString().trim())) {
             reg_name_et.setError(getString(R.string.name_required));
             reg_name_et.requestFocus();
-        }else if (TextUtils.isEmpty(reg_mobile_et.getText().toString().toString())){
+        } else if (TextUtils.isEmpty(reg_mobile_et.getText().toString().toString())) {
             reg_mobile_et.setError(getString(R.string.mobile_required));
             reg_mobile_et.requestFocus();
-        }else if(reg_mobile_et.getText().toString().length()<10){
+        } else if (reg_mobile_et.getText().toString().length() < 10) {
             reg_mobile_et.setError(getString(R.string.valid_mobile));
             reg_mobile_et.requestFocus();
-        }else if (TextUtils.isEmpty(reg_email_et.getText().toString().trim())){
+        } else if (TextUtils.isEmpty(reg_email_et.getText().toString().trim())) {
             reg_email_et.setError(getString(R.string.email_address_required));
             reg_email_et.requestFocus();
-        }else if (TextUtils.isEmpty(reg_password_et.getText().toString().trim())){
+        } else if (TextUtils.isEmpty(reg_password_et.getText().toString().trim())) {
             reg_password_et.setError(getString(R.string.password_required));
             reg_password_et.requestFocus();
-        }else if (reg_password_et.getText().toString().length()<8){
+        } else if (reg_password_et.getText().toString().length() < 8) {
             reg_password_et.setError(getString(R.string.password_too_short));
             reg_password_et.requestFocus();
-        }else if (!SharedPrefManager.getInstance(Registration.this).CheckPassword(reg_password_et.getText().toString())){
+        } else if (!SharedPrefManager.getInstance(Registration.this).CheckPassword(reg_password_et.getText().toString())) {
             reg_password_et.setError(getString(R.string.pass_must_6));
             reg_password_et.requestFocus();
-        } else if (TextUtils.isEmpty(reg_con_passwrod_et.getText().toString().toString())){
+        } else if (TextUtils.isEmpty(reg_con_passwrod_et.getText().toString().toString())) {
             reg_con_passwrod_et.setError(getString(R.string.confirm_password_required));
             reg_con_passwrod_et.requestFocus();
-        }else if (reg_password_et.getText().toString().trim().compareTo(reg_con_passwrod_et.getText().toString().trim())!=0){
+        } else if (reg_password_et.getText().toString().trim().compareTo(reg_con_passwrod_et.getText().toString().trim()) != 0) {
             reg_con_passwrod_et.setError(getString(R.string.pass_and_con_pass_not_match));
             reg_con_passwrod_et.requestFocus();
-        }else if (!SharedPrefManager.isValidEmail(reg_email_et.getText().toString().trim())){
+        } else if (!SharedPrefManager.isValidEmail(reg_email_et.getText().toString().trim())) {
             reg_email_et.setError(getString(R.string.email_not_valid));
             reg_email_et.requestFocus();
-        }else {
+        } else {
             try {
                 JSONObject request_Obj = new JSONObject();
                 JSONObject objectNew = new JSONObject();
@@ -107,14 +115,14 @@ public class Registration extends AppCompatActivity implements WebCompleteTask {
                 objectNew.put("password", reg_password_et.getText().toString().trim());
                 objectNew.put("phone", reg_mobile_et.getText().toString().trim());
 
-                request_Obj.put("method","register");
-                request_Obj.put("data",objectNew);
+                request_Obj.put("method", "register");
+                request_Obj.put("data", objectNew);
 
                 HashMap reqNew = new HashMap();
-                reqNew.put("request",request_Obj.toString());
+                reqNew.put("request", request_Obj.toString());
                 Log.d("registration_res:", reqNew.toString());
-                new WebTask(Registration.this, WebUrls.BASE_URL,reqNew,Registration.this, RequestCode.CODE_Register,1);
-            }catch (JSONException e){
+                new WebTask(Registration.this, WebUrls.BASE_URL, reqNew, Registration.this, RequestCode.CODE_Register, 1);
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -124,22 +132,22 @@ public class Registration extends AppCompatActivity implements WebCompleteTask {
     @Override
     public void onComplete(String response, int taskcode) {
 
-        if (RequestCode.CODE_Register == taskcode){
-            try{
+        if (RequestCode.CODE_Register == taskcode) {
+            try {
                 JSONObject jsonObject = new JSONObject(response);
 
                 JSONObject dataObj = jsonObject.optJSONObject("data");
-                if (jsonObject.optString("status").compareTo("success")==0){
-                    SharedPrefManager.setUserID(Constrants.UserId,dataObj.optString("user_id"));
-                    SharedPrefManager.setUserMobile(Constrants.UserMobile,dataObj.optString("phone"));
-                    SharedPrefManager.setUserEmail(Constrants.UserEmail,dataObj.optString("email"));
-                    SharedPrefManager.setUserName(Constrants.UserName,dataObj.optString("name"));
-                    startActivity(new Intent(Registration.this,OptVerification.class));
+                if (jsonObject.optString("status").compareTo("success") == 0) {
+                    SharedPrefManager.setUserID(Constrants.UserId, dataObj.optString("user_id"));
+                    SharedPrefManager.setUserMobile(Constrants.UserMobile, dataObj.optString("phone"));
+                    SharedPrefManager.setUserEmail(Constrants.UserEmail, dataObj.optString("email"));
+                    SharedPrefManager.setUserName(Constrants.UserName, dataObj.optString("name"));
+                    startActivity(new Intent(Registration.this, OptVerification.class));
                     finish();
-                }else {
-                    Toast.makeText(Registration.this,jsonObject.optString("message"),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Registration.this, jsonObject.optString("message"), Toast.LENGTH_SHORT).show();
                 }
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }

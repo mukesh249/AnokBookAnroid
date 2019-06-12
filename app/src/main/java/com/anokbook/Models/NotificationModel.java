@@ -1,6 +1,7 @@
 package com.anokbook.Models;
 
 public class NotificationModel {
+
     String book_imag,msg_title,message,time_ago;
 
     public String getBook_imag() {

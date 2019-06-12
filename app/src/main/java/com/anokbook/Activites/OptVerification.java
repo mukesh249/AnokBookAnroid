@@ -15,13 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.anokbook.Api.RequestCode;
 import com.anokbook.Api.WebCompleteTask;
 import com.anokbook.Api.WebTask;
@@ -30,13 +23,26 @@ import com.anokbook.Common.Constrants;
 import com.anokbook.Common.SharedPrefManager;
 import com.anokbook.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class OptVerification extends AppCompatActivity implements WebCompleteTask {
 
-    @BindView(R.id.logo) ImageView logo;
-    @BindView(R.id.mobile_rel) RelativeLayout mobile_rel;
-    @BindView(R.id.opt_et) EditText opt_et;
-    @BindView(R.id.resend_tv) TextView resend_tv;
-    @BindView(R.id.verify) Button verify_btn;
+    @BindView(R.id.logo)
+    ImageView logo;
+    @BindView(R.id.mobile_rel)
+    RelativeLayout mobile_rel;
+    @BindView(R.id.opt_et)
+    EditText opt_et;
+    @BindView(R.id.resend_tv)
+    TextView resend_tv;
+    @BindView(R.id.verify)
+    Button verify_btn;
     String fromActivity;
 
     @Override
@@ -44,7 +50,7 @@ public class OptVerification extends AppCompatActivity implements WebCompleteTas
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opt_verification);
 
-        ButterKnife.bind(this,this);
+        ButterKnife.bind(this, this);
         resend_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,8 +58,8 @@ public class OptVerification extends AppCompatActivity implements WebCompleteTas
             }
         });
 
-        if (getIntent().getExtras()!=null)
-        fromActivity = getIntent().getExtras().getString("Activity","");
+        if (getIntent().getExtras() != null)
+            fromActivity = getIntent().getExtras().getString("Activity", "");
 
         verify_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,43 +69,44 @@ public class OptVerification extends AppCompatActivity implements WebCompleteTas
         });
     }
 
-    public void VerifyOtpMethod(){
-        if (TextUtils.isEmpty(opt_et.getText().toString().trim())){
+    public void VerifyOtpMethod() {
+        if (TextUtils.isEmpty(opt_et.getText().toString().trim())) {
             opt_et.setError(getString(R.string.opt_required));
             opt_et.requestFocus();
-        }else {
+        } else {
             try {
                 JSONObject dataObject = new JSONObject();
-                dataObject.put("otp",opt_et.getText().toString().trim());
-                dataObject.put("user_id",SharedPrefManager.getUserID(Constrants.UserId));
+                dataObject.put("otp", opt_et.getText().toString().trim());
+                dataObject.put("user_id", SharedPrefManager.getUserID(Constrants.UserId));
 
                 JSONObject requestobj = new JSONObject();
-                requestobj.put("method","check_otp");
-                requestobj.put("data",dataObject);
+                requestobj.put("method", "check_otp");
+                requestobj.put("data", dataObject);
 
                 HashMap objectNew = new HashMap();
-                objectNew.put("request",requestobj.toString());
+                objectNew.put("request", requestobj.toString());
                 Log.d("check_otp_res:", objectNew.toString());
-                new WebTask(OptVerification.this, WebUrls.BASE_URL,objectNew,OptVerification.this, RequestCode.CODE_OtpCheck,1);
+                new WebTask(OptVerification.this, WebUrls.BASE_URL, objectNew, OptVerification.this, RequestCode.CODE_OtpCheck, 1);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
     }
-    public void ResendMethod(){
+
+    public void ResendMethod() {
         try {
             JSONObject dataObject = new JSONObject();
-            dataObject.put("user_id",SharedPrefManager.getUserID(Constrants.UserId));
+            dataObject.put("user_id", SharedPrefManager.getUserID(Constrants.UserId));
 
             JSONObject requestobj = new JSONObject();
-            requestobj.put("method","resend_otp");
-            requestobj.put("data",dataObject);
+            requestobj.put("method", "resend_otp");
+            requestobj.put("data", dataObject);
 
             HashMap objectNew = new HashMap();
-            objectNew.put("request",requestobj.toString());
+            objectNew.put("request", requestobj.toString());
             Log.d("resend_otp_res:", objectNew.toString());
-              new WebTask(OptVerification.this, WebUrls.BASE_URL,objectNew,OptVerification.this, RequestCode.CODE_ResendOtp,1);
+            new WebTask(OptVerification.this, WebUrls.BASE_URL, objectNew, OptVerification.this, RequestCode.CODE_ResendOtp, 1);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -112,29 +119,29 @@ public class OptVerification extends AppCompatActivity implements WebCompleteTas
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.optString("status").compareTo("success") == 0) {
-                    if (fromActivity!=null && fromActivity.compareTo("ForgetMobile")==0){
+                    if (fromActivity != null && fromActivity.compareTo("ForgetMobile") == 0) {
                         Toast.makeText(OptVerification.this, jsonObject.optString("message"), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(OptVerification.this,NewChangePassword.class);
+                        Intent intent = new Intent(OptVerification.this, NewChangePassword.class);
 
                         Pair[] pairs = new Pair[3];
-                        pairs[0] = new Pair<View,String>(logo,"logo_trans");
-                        pairs[1] = new Pair<View,String>(verify_btn,"btn_trans");
-                        pairs[2] = new Pair<View,String>(mobile_rel,"mobile_trans");
+                        pairs[0] = new Pair<View, String>(logo, "logo_trans");
+                        pairs[1] = new Pair<View, String>(verify_btn, "btn_trans");
+                        pairs[2] = new Pair<View, String>(mobile_rel, "mobile_trans");
 
-                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(OptVerification.this,pairs);
-                        startActivity(intent,options.toBundle());
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(OptVerification.this, pairs);
+                        startActivity(intent, options.toBundle());
                         finish();
 
-                    }else {
+                    } else {
                         Toast.makeText(OptVerification.this, jsonObject.optString("message"), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(OptVerification.this, Login.class);
                         Pair[] pairs = new Pair[3];
-                        pairs[0] = new Pair<View,String>(logo,"logo_trans");
-                        pairs[1] = new Pair<View,String>(verify_btn,"btn_trans");
-                        pairs[2] = new Pair<View,String>(mobile_rel,"mobile_trans");
+                        pairs[0] = new Pair<View, String>(logo, "logo_trans");
+                        pairs[1] = new Pair<View, String>(verify_btn, "btn_trans");
+                        pairs[2] = new Pair<View, String>(mobile_rel, "mobile_trans");
 
-                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(OptVerification.this,pairs);
-                        startActivity(intent,options.toBundle());
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(OptVerification.this, pairs);
+                        startActivity(intent, options.toBundle());
                         finish();
 
                     }
@@ -145,7 +152,7 @@ public class OptVerification extends AppCompatActivity implements WebCompleteTas
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }else if (RequestCode.CODE_ResendOtp==taskcode){
+        } else if (RequestCode.CODE_ResendOtp == taskcode) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.optString("status").compareTo("success") == 0) {

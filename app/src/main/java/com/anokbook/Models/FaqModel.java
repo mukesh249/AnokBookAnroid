@@ -3,6 +3,7 @@ package com.anokbook.Models;
 import java.io.Serializable;
 
 public class FaqModel implements Serializable {
+
     String faq_id,faq_ques,faq_ans;
 
     public String getFaq_id() {

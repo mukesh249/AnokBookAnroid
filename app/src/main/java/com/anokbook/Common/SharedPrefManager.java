@@ -14,60 +14,78 @@ public class SharedPrefManager {
 
     private static final String SHARE_PREF_NAME = "fcmsharedprefdemo";
     private static final String KEY_ACCESS_TOKEN = "fcmtoken";
+    public static SharedPreferences sp;
     private static String islagChange;
-
     private static Context mCtx;
     private static SharedPrefManager mInstance;
-    public static SharedPreferences sp;
+
     private SharedPrefManager(Context context) {
         mCtx = context;
         sp = mCtx.getSharedPreferences("BabbaBazri", Context.MODE_PRIVATE);
     }
+
     public static synchronized SharedPrefManager getInstance(Context context) {
         if (mInstance == null)
             mInstance = new SharedPrefManager(context);
         return mInstance;
     }
 
-    public static void setUserID(String type ,String userId) {
+    public static void setUserID(String type, String userId) {
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(type,userId);
+        editor.putString(type, userId);
         editor.commit();
     }
+
     public static String getUserID(String type) {
-        String e = sp.getString(type,"");
+        String e = sp.getString(type, "");
         return e;
     }
 
-    public static void setUserMobile(String type ,String userId) {
+    public static void setUserMobile(String type, String userId) {
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(type,userId);
+        editor.putString(type, userId);
         editor.commit();
     }
+
     public static String getUserMobile(String type) {
-        String e = sp.getString(type,"");
+        String e = sp.getString(type, "");
         return e;
     }
 
-    public static void setUserEmail(String type ,String userId) {
+    public static void setUserEmail(String type, String userId) {
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(type,userId);
+        editor.putString(type, userId);
         editor.commit();
     }
+
     public static String getUserEmail(String type) {
-        String e = sp.getString(type,"");
+        String e = sp.getString(type, "");
         return e;
     }
 
-    public static void setUserName(String type ,String userId) {
+    public static void setUserName(String type, String userId) {
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(type,userId);
+        editor.putString(type, userId);
         editor.commit();
     }
+
     public static String getUserName(String type) {
-        String e = sp.getString(type,"");
+        String e = sp.getString(type, "");
         return e;
     }
+
+    public static void showMessage(Context ctx, String msg) {
+        Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public static boolean isValidEmail(String email) {
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
     public void storeIsLoggedIn(Boolean isLoggedIn) {
         SharedPreferences sharedPreferencesReg = mCtx.getSharedPreferences("login", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferencesReg.edit();
@@ -93,16 +111,7 @@ public class SharedPrefManager {
             e.printStackTrace();
         }
     }
-    public static void showMessage(Context ctx, String msg) {
-        Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show();
-    }
-    public static boolean isValidEmail(String email){
-        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
+
     public Boolean CheckPassword(String password) {
         String[] re = {"[a-z]", "[?=.*[@#$%!\\-_?&])(?=\\\\S+$]"};
         for (String r : re) {
@@ -110,7 +119,6 @@ public class SharedPrefManager {
         }
         return true;
     }
-
 
 
 }
