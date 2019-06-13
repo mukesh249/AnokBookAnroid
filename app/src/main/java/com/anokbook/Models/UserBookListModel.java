@@ -3,6 +3,7 @@ package com.anokbook.Models;
 import java.io.Serializable;
 
 public class UserBookListModel implements Serializable {
+
     String book_imag,id,user_id,cat_id,book_name,author_name,description,page_no,mrp,name,address,location,landmarks,publication,contact_no,alternate_no,pupose,created_at,updated_at,attachment_id,attachment_type,attachment_name,cat_name,user_like_status;
 
     public String getBook_imag() {

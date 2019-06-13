@@ -96,7 +96,10 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
-        </provider> <!-- <meta-data -->
+        </provider>
+
+        <!-- <meta-data -->
+
         <!-- android:name="io.fabric.ApiKey" -->
         <!-- android:value="b5ba776f1cc5b84a96c6f8f7001a1e55f9370670" /> -->
         <meta-data
@@ -106,9 +109,9 @@
             android:name="com.razorpay.ApiKey"
             android:value="rzp_live_fUttKPF9UYssZo" />
 
-        <!-- FirebaseServices -->
+        <!-- FirebaseService -->
 
-        <service android:name=".Firebase.NewFcmReceiver">
+        <service android:name=".Firebase.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

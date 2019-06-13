@@ -1,6 +1,7 @@
 package com.anokbook.Activites;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Context;
@@ -35,12 +36,15 @@ import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -70,7 +74,10 @@ import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -98,9 +105,7 @@ public class HomeScreen extends AppCompatActivity implements WebCompleteTask {
     private static String TAG = "HomeScreen";
     final Context context = this;
     public Boolean up = false, down = false;
-
     String dist_string = "", order_status_string = "", sort_by_string = "", cat_id_string = "", min_price_string = "", max_price_string = "";
-
     @BindView(R.id.search_tv)
     TextView search_tv;
     @BindView(R.id.current_dis)
@@ -181,11 +186,23 @@ public class HomeScreen extends AppCompatActivity implements WebCompleteTask {
     SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<String> cat_id_array = new ArrayList<>();
     ArrayList<String> cat_name_array = new ArrayList<>();
+    private AppCompatActivity appCompatActivity;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Spinner filter_spinner;
 
     public static HomeScreen getInstance() {
         return mInstance;
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
@@ -197,6 +214,7 @@ public class HomeScreen extends AppCompatActivity implements WebCompleteTask {
         setContentView(R.layout.activity_home_screen);
         ButterKnife.bind(this, this);
 
+        appCompatActivity = this;
         mInstance = this;
         listview = true;
         gridview = false;
@@ -258,7 +276,6 @@ public class HomeScreen extends AppCompatActivity implements WebCompleteTask {
                 km_15.setBackground(null);
                 km_20.setBackground(null);
                 km_25.setBackground(null);
-
                 dist_string = "5";
                 km_5.setTextColor(getResources().getColor(R.color.white));
                 km_10.setTextColor(getResources().getColor(R.color.black));
@@ -447,6 +464,27 @@ public class HomeScreen extends AppCompatActivity implements WebCompleteTask {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (search_lay.getVisibility() == View.VISIBLE) {
+                    cur_rel.setVisibility(View.VISIBLE);
+                    search_lay.setVisibility(View.GONE);
+                }
+
+                km_5.setBackground(null);
+                km_10.setBackground(null);
+                km_15.setBackground(null);
+                km_20.setBackground(null);
+                km_25.setBackground(null);
+
+                km_5.setTextColor(getResources().getColor(R.color.black));
+                km_10.setTextColor(getResources().getColor(R.color.black));
+                km_15.setTextColor(getResources().getColor(R.color.black));
+                km_20.setTextColor(getResources().getColor(R.color.black));
+                km_25.setTextColor(getResources().getColor(R.color.black));
+
+                dist_string = "";
+                All_Book_List_Method();
+
 //                Toast.makeText(HomeScreen.this,"Home",Toast.LENGTH_SHORT).show();
                 ShowingCategoriesAdapter.select_cat = null;
                 ShowingCategoriesAdapter.select_cat_id = null;
@@ -519,6 +557,20 @@ public class HomeScreen extends AppCompatActivity implements WebCompleteTask {
             Selection.setSelection(search_et.getText(), search_et.getText().toString().length());
             clear_icon.setVisibility(View.VISIBLE);
         }
+        search_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if ((actionId == EditorInfo.IME_ACTION_DONE)) {
+
+                    hideKeyboard(appCompatActivity);
+
+                    return true;
+
+                }
+                return false;
+            }
+        });
 //        search_et.addTextChangedListener(new TextWatcher() {
 //            @Override
 //            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -553,7 +605,7 @@ public class HomeScreen extends AppCompatActivity implements WebCompleteTask {
                 All_Book_List_Method();
             }
         });
-        //-----------------------------------------Searching prduct-------------------------------------
+        //-----------------------------------------Searching product-------------------------------------
         search_et.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -586,7 +638,12 @@ public class HomeScreen extends AppCompatActivity implements WebCompleteTask {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (search_lay.getVisibility() == View.VISIBLE) {
+            search_lay.setVisibility(View.GONE);
+            cur_rel.setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -661,7 +718,7 @@ public class HomeScreen extends AppCompatActivity implements WebCompleteTask {
         } else {
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
-                Log.i("About GPS", "GPS is Enabled in your devide");
+                Log.i("About GPS", "GPS is Enabled in your device");
 //                getLocation();
                 // Toast.makeText(ctx,"enable",Toast.LENGTH_SHORT).show();
             } else {

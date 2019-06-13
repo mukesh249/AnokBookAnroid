@@ -185,8 +185,8 @@ public class HomeBookListAdapter extends RecyclerView.Adapter<HomeBookListAdapte
 //                        intent.putExtra("book_id", homeBookListModelArrayList.get(posi).getId());
 //                        intent.putExtra("user_id", homeBookListModelArrayList.get(posi).getUser_id());
 ////                    intent.putExtra(context, homeBookListModel);
-//                        android.support.v4.util.Pair<View, String> p1 = Pair.create((View) book_image, "Book_image");
-//                        android.support.v4.util.Pair<View, String> p2 = Pair.create((View) book_name, "Book_name");
+//                        android.support.v4.Utils.Pair<View, String> p1 = Pair.create((View) book_image, "Book_image");
+//                        android.support.v4.Utils.Pair<View, String> p2 = Pair.create((View) book_name, "Book_name");
 //                        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, p1, p2);
 //                        context.startActivity(intent, options.toBundle());
 //                    }catch (Exception e){

@@ -14,7 +14,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         super.onTokenRefresh();
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
-
         // sending reg id to your server
         sendRegistrationToServer(refreshedToken);
 

@@ -50,7 +50,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.anokbook.adapter.ImageGalleryAdapter;
-import com.anokbook.util.RealPathUtil;
+import com.anokbook.Utils.RealPathUtil;
 
 public class TedBottomPicker extends Fragment {
 

@@ -1,4 +1,4 @@
-package com.anokbook.util;
+package com.anokbook.Utils;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;

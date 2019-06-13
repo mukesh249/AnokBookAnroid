@@ -1,6 +1,7 @@
 package com.anokbook.Common;
 
 public class DataPart {
+
     private String fileName;
     private byte[] content;
     private String type;

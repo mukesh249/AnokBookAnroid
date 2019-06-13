@@ -1,8 +1,8 @@
 package com.anokbook.Activites;
 
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -11,6 +11,12 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anokbook.Api.RequestCode;
+import com.anokbook.Api.WebCompleteTask;
+import com.anokbook.Api.WebTask;
+import com.anokbook.Api.WebUrls;
+import com.anokbook.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,16 +24,14 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.anokbook.Api.RequestCode;
-import com.anokbook.Api.WebCompleteTask;
-import com.anokbook.Api.WebTask;
-import com.anokbook.Api.WebUrls;
-import com.anokbook.R;
 
 public class TermAndCondition extends AppCompatActivity implements WebCompleteTask {
-    @BindView(R.id.privacy_policy_title_tv) TextView privacy_policy_title;
-    @BindView(R.id.privacy_policy_content_tv) TextView privacy_policy_content;
-    @BindView(R.id.profile_edit_toobar) Toolbar toolbar;
+    @BindView(R.id.privacy_policy_title_tv)
+    TextView privacy_policy_title;
+    @BindView(R.id.privacy_policy_content_tv)
+    TextView privacy_policy_content;
+    @BindView(R.id.profile_edit_toobar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class TermAndCondition extends AppCompatActivity implements WebCompleteTa
         setContentView(R.layout.activity_term_and_condition);
 
 
-        ButterKnife.bind(this,this);
+        ButterKnife.bind(this, this);
 
         setSupportActionBar(toolbar);
         setTitle("Term And Conditions");
@@ -49,15 +53,17 @@ public class TermAndCondition extends AppCompatActivity implements WebCompleteTa
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         PrivacyPolicyMethod();
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void PrivacyPolicyMethod() {
         try {
             JSONObject dataObj = new JSONObject();
@@ -79,15 +85,15 @@ public class TermAndCondition extends AppCompatActivity implements WebCompleteTa
 
     @Override
     public void onComplete(String response, int taskcode) {
-        if (RequestCode.CODE_Privacypolicy == taskcode){
+        if (RequestCode.CODE_Privacypolicy == taskcode) {
             Log.d("Privacy_list_res", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                if (jsonObject.optString("status").compareTo("success")==0){
+                if (jsonObject.optString("status").compareTo("success") == 0) {
                     privacy_policy_title.setText(jsonObject.optJSONObject("data").optString("title"));
                     privacy_policy_content.setText(jsonObject.optJSONObject("data").optString("description"));
-                }else {
-                    Toast.makeText(TermAndCondition.this,jsonObject.optString("message"),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(TermAndCondition.this, jsonObject.optString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

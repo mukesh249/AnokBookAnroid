@@ -4,6 +4,7 @@ package com.anokbook.Api;
 /**
  * Created by Advosoft2 on 6/28/2017.
  */
+
 public class WebUrls {
     public static final String BASE_URL = "http://escortapp.co.in/anokbook/api";
     public static final String IMG_BASE_URL = "http://escortapp.co.in/anokbook";

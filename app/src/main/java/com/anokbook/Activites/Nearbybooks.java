@@ -29,6 +29,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.anokbook.Adapters.PlaceAutocompleteAdapter;
+import com.anokbook.Adapters.ShowingCategoriesAdapter;
+import com.anokbook.Api.RequestCode;
+import com.anokbook.Api.WebCompleteTask;
+import com.anokbook.Api.WebTask;
+import com.anokbook.Api.WebUrls;
+import com.anokbook.Models.PlaceInfo;
+import com.anokbook.Models.ShowingCategoriesModel;
+import com.anokbook.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -56,40 +65,98 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.anokbook.Adapters.PlaceAutocompleteAdapter;
-import com.anokbook.Adapters.ShowingCategoriesAdapter;
-import com.anokbook.Api.RequestCode;
-import com.anokbook.Api.WebCompleteTask;
-import com.anokbook.Api.WebTask;
-import com.anokbook.Api.WebUrls;
-import com.anokbook.Models.PlaceInfo;
-import com.anokbook.Models.ShowingCategoriesModel;
-import com.anokbook.R;
 
-public class Nearbybooks extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener , WebCompleteTask {
+public class Nearbybooks extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, WebCompleteTask {
 
-    @BindView(R.id.showing_categories_recyclerView) RecyclerView showing_categories_recyclerView;
-    @BindView(R.id.back_btn) ImageView back_btn;
-    @BindView(R.id.current_loction_rel) RelativeLayout current_loction_rel;
-    @BindView(R.id.search_et) AutoCompleteTextView search_et;
-    @BindView(R.id.clear_icon) ImageView clear_icon;
-    @BindView(R.id.current_icon) ImageView current_icon;
-    @BindView(R.id.loca_cat_tv) TextView search_submit;
+    private static final int LOCATION_PERSMISSION_REQUEST_CODE = 3;
+    private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(
+            new LatLng(-40, -168), new LatLng(71, 136)
+    );
+    private final static String TAG = "Nearbybooks";
+    public static double latti, longi;
+    @BindView(R.id.showing_categories_recyclerView)
+    RecyclerView showing_categories_recyclerView;
+    @BindView(R.id.back_btn)
+    ImageView back_btn;
+    @BindView(R.id.current_loction_rel)
+    RelativeLayout current_loction_rel;
+    @BindView(R.id.search_et)
+    AutoCompleteTextView search_et;
+    @BindView(R.id.clear_icon)
+    ImageView clear_icon;
+    @BindView(R.id.current_icon)
+    ImageView current_icon;
+    @BindView(R.id.loca_cat_tv)
+    TextView search_submit;
+    ShowingCategoriesAdapter showingCategoriesAdapter;
+    ArrayList<ShowingCategoriesModel> showingCategoriesModelArrayList = new ArrayList<>();
+    LatLng latlng;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private static final int LOCATION_PERSMISSION_REQUEST_CODE =3;
-
     private GoogleApiClient mGoogleApiClient;
     private PlaceAutocompleteAdapter mPlaceAutocompleteAdapter;
     private PlaceInfo mPlace;
-    private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(
-            new LatLng(-40,-168),new LatLng(71,136)
-    );
-    private final static String TAG = "Nearbybooks";
+    private ResultCallback<PlaceBuffer> mUpdatePlaceDitailsCallback = new ResultCallback<PlaceBuffer>() {
+        @Override
+        public void onResult(@NonNull PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                Log.d(TAG, "onResult: place query did not complete successfully." + places.getStatus().toString());
+                places.release();
+                return;
+            }
+            final Place place = places.get(0);
 
-    ShowingCategoriesAdapter showingCategoriesAdapter;
-    ArrayList<ShowingCategoriesModel> showingCategoriesModelArrayList = new ArrayList<>();
-    public static double latti,longi;
-    LatLng latlng;
+            try {
+                mPlace = new PlaceInfo();
+                mPlace.setAddress(place.getAddress().toString());
+//                mPlace.setAttributions(place.getAttributions().toString());
+                mPlace.setId(place.getId().toString());
+                mPlace.setPhoneNumber(place.getPhoneNumber().toString());
+                mPlace.setLatLng(place.getLatLng());
+                mPlace.setName(place.getName().toString());
+                mPlace.setRating(place.getRating());
+                mPlace.setWebsiteuri(place.getWebsiteUri());
+
+                Log.d(TAG, "OnResult: place details " + mPlace.toString());
+
+            } catch (NullPointerException e) {
+                Log.d(TAG, "OnResult: NullPointerException " + e.getMessage());
+            }
+
+            latlng = mPlace.getLatLng();
+            latti = latlng.latitude;
+            longi = latlng.longitude;
+//            lat = String.valueOf(latti);
+//            lng = String.valueOf(longi);
+//            addressObj = new JSONObject();
+//            try {
+//                JSONObject locationobj = new JSONObject();
+//                locationobj.put("lat",lat);
+//                locationobj.put("lng", lng);
+//                addressObj.put("address", et_address.getText().toString().trim());
+//                addressObj.put("location", locationobj);
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+//            Log.d(TAG,"OnResult: place lat lng details " + lat + ","+ lng);
+
+            places.release();
+        }
+    };
+    /*
+       -------------------------------google places API autocomplete suggestions
+ */
+    private AdapterView.OnItemClickListener mAutoCompleteClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//            SharedPrefManager.getInstance(getApplicationContext()).hideSoftKeyBoard(Signup.this);
+
+            final AutocompletePrediction item = mPlaceAutocompleteAdapter.getItem(position);
+            final String placeId = item.getPlaceId();
+
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDitailsCallback);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +167,7 @@ public class Nearbybooks extends AppCompatActivity implements GoogleApiClient.On
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearbybooks);
-        ButterKnife.bind(this,this);
+        ButterKnife.bind(this, this);
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +175,6 @@ public class Nearbybooks extends AppCompatActivity implements GoogleApiClient.On
                 finish();
             }
         });
-
 
 
         showing_categories_recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -119,10 +185,10 @@ public class Nearbybooks extends AppCompatActivity implements GoogleApiClient.On
                 getLocation();
             }
         });
-        if (TextUtils.isEmpty(search_et.getText().toString())){
+        if (TextUtils.isEmpty(search_et.getText().toString())) {
             clear_icon.setVisibility(View.GONE);
-        }else {
-            Selection.setSelection(search_et.getText(),search_et.getText().toString().length());
+        } else {
+            Selection.setSelection(search_et.getText(), search_et.getText().toString().length());
             clear_icon.setVisibility(View.VISIBLE);
         }
         search_et.addTextChangedListener(new TextWatcher() {
@@ -133,9 +199,9 @@ public class Nearbybooks extends AppCompatActivity implements GoogleApiClient.On
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (TextUtils.isEmpty(search_et.getText().toString())){
+                if (TextUtils.isEmpty(search_et.getText().toString())) {
                     clear_icon.setVisibility(View.GONE);
-                }else {
+                } else {
                     clear_icon.setVisibility(View.VISIBLE);
                 }
             }
@@ -155,10 +221,10 @@ public class Nearbybooks extends AppCompatActivity implements GoogleApiClient.On
         search_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(search_et.getText().toString())){
+                if (TextUtils.isEmpty(search_et.getText().toString())) {
                     search_et.setError(getString(R.string.enter_address));
                     search_et.requestFocus();
-                }else if (latlng!=null) {
+                } else if (latlng != null) {
                     Intent intent = new Intent(Nearbybooks.this, HomeScreen.class);
                     intent.putExtra("Adrress", search_et.getText().toString().trim());
                     intent.putExtra("Cat_id", ShowingCategoriesAdapter.select_cat_id);
@@ -183,29 +249,28 @@ public class Nearbybooks extends AppCompatActivity implements GoogleApiClient.On
 //            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
             Task<Location> location = fusedLocationProviderClient.getLastLocation();
-            location.addOnCompleteListener(new OnCompleteListener<Location>()
-                                           {
+            location.addOnCompleteListener(new OnCompleteListener<Location>() {
                                                @Override
                                                public void onComplete(@NonNull Task<Location> task) {
-                                                   if (task.isSuccessful()){
-                                                       Location currentLocation = (Location)task.getResult();
-                                                       if (currentLocation!=null){
-                                                            latti = currentLocation.getLatitude();
-                                                            longi = currentLocation.getLongitude();
+                                                   if (task.isSuccessful()) {
+                                                       Location currentLocation = (Location) task.getResult();
+                                                       if (currentLocation != null) {
+                                                           latti = currentLocation.getLatitude();
+                                                           longi = currentLocation.getLongitude();
 
                                                            Geocoder geocoder = new Geocoder(Nearbybooks.this, Locale.getDefault());
-                                                           try{
-                                                               List<Address> addresses = geocoder.getFromLocation(latti,longi,1);
+                                                           try {
+                                                               List<Address> addresses = geocoder.getFromLocation(latti, longi, 1);
                                                                Address addressobj = addresses.get(0);
 //                                                                addressobj.getAddressLine(0);
                                                                String add = addressobj.getAddressLine(0);
                                                                search_et.setText(add);
                                                                search_et.setSelection(add.length());
-                                                           }catch (IOException e){
+                                                           } catch (IOException e) {
                                                                e.printStackTrace();
                                                            }
                                                        }
-                                                   }else {
+                                                   } else {
                                                        search_et.setText("Unable to find current location . Try again later");
                                                    }
                                                }
@@ -213,6 +278,7 @@ public class Nearbybooks extends AppCompatActivity implements GoogleApiClient.On
             );
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -223,20 +289,21 @@ public class Nearbybooks extends AppCompatActivity implements GoogleApiClient.On
                 break;
         }
     }
-    private void init(){
-        Log.d(TAG,"init: initializing");
+
+    private void init() {
+        Log.d(TAG, "init: initializing");
 
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(this,this)
+                .enableAutoManage(this, this)
                 .build();
 
         search_et.setOnItemClickListener(mAutoCompleteClickListener);
 
-        mPlaceAutocompleteAdapter = new PlaceAutocompleteAdapter(this,mGoogleApiClient,
-                LAT_LNG_BOUNDS,null);
+        mPlaceAutocompleteAdapter = new PlaceAutocompleteAdapter(this, mGoogleApiClient,
+                LAT_LNG_BOUNDS, null);
         search_et.setAdapter(mPlaceAutocompleteAdapter);
 
         search_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -254,18 +321,19 @@ public class Nearbybooks extends AppCompatActivity implements GoogleApiClient.On
             }
         });
     }
+
     private void geoLocate() {
         Log.d(TAG, "geoLocate: geoLoating");
         String searchString = search_et.getText().toString();
         Geocoder geocoder = new Geocoder(this);
         List<Address> list = new ArrayList<>();
         try {
-            list = geocoder.getFromLocationName(searchString,1);
-        }catch (IOException e){
+            list = geocoder.getFromLocationName(searchString, 1);
+        } catch (IOException e) {
             Log.d(TAG, "geoLocate: IOexception" + e.getMessage());
         }
 
-        if (list.size()>0){
+        if (list.size() > 0) {
             Address address = list.get(0);
 
             Log.d(TAG, "geoLocate: found a location" + address.toString());
@@ -273,110 +341,48 @@ public class Nearbybooks extends AppCompatActivity implements GoogleApiClient.On
             //moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),DEFAULT_ZOOM,address.getAddressLine(0));
         }
     }
-    /*
-       -------------------------------google places API autocomplete suggestions
- */
-    private AdapterView.OnItemClickListener mAutoCompleteClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//            SharedPrefManager.getInstance(getApplicationContext()).hideSoftKeyBoard(Signup.this);
-
-            final AutocompletePrediction item = mPlaceAutocompleteAdapter.getItem(position);
-            final String placeId = item.getPlaceId();
-
-            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient,placeId);
-            placeResult.setResultCallback(mUpdatePlaceDitailsCallback);
-        }
-    };
-
-    private ResultCallback<PlaceBuffer> mUpdatePlaceDitailsCallback = new ResultCallback<PlaceBuffer>() {
-        @Override
-        public void onResult(@NonNull PlaceBuffer places) {
-            if (!places.getStatus().isSuccess()){
-                Log.d(TAG,"onResult: place query did not complete successfully."+ places.getStatus().toString());
-                places.release();
-                return;
-            }
-            final Place place = places.get(0);
-
-            try {
-                mPlace = new PlaceInfo();
-                mPlace.setAddress(place.getAddress().toString());
-//                mPlace.setAttributions(place.getAttributions().toString());
-                mPlace.setId(place.getId().toString());
-                mPlace.setPhoneNumber(place.getPhoneNumber().toString());
-                mPlace.setLatLng(place.getLatLng());
-                mPlace.setName(place.getName().toString());
-                mPlace.setRating(place.getRating());
-                mPlace.setWebsiteuri(place.getWebsiteUri());
-
-                Log.d(TAG,"OnResult: place details " + mPlace.toString());
-
-            }catch (NullPointerException e){
-                Log.d(TAG,"OnResult: NullPointerException " + e.getMessage());
-            }
-
-            latlng = mPlace.getLatLng();
-            latti = latlng.latitude;
-            longi = latlng.longitude;
-//            lat = String.valueOf(latti);
-//            lng = String.valueOf(longi);
-//            addressObj = new JSONObject();
-//            try {
-//                JSONObject locationobj = new JSONObject();
-//                locationobj.put("lat",lat);
-//                locationobj.put("lng", lng);
-//                addressObj.put("address", et_address.getText().toString().trim());
-//                addressObj.put("location", locationobj);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//            Log.d(TAG,"OnResult: place lat lng details " + lat + ","+ lng);
-
-            places.release();
-        }
-    };
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-    public void CategoriesListMethod(){
+
+    public void CategoriesListMethod() {
         try {
             JSONObject dataObj = new JSONObject();
             JSONObject resqObj = new JSONObject();
-            resqObj.put("method","category_list");
-            resqObj.put("data",dataObj);
+            resqObj.put("method", "category_list");
+            resqObj.put("data", dataObj);
 
             HashMap objectNew = new HashMap();
-            objectNew.put("request",resqObj.toString());
-            Log.d("category_list_data",objectNew.toString());
-            new WebTask(Nearbybooks.this, WebUrls.BASE_URL,objectNew,Nearbybooks.this, RequestCode.CODE_Category_List,1);
-        }catch (JSONException e){
+            objectNew.put("request", resqObj.toString());
+            Log.d("category_list_data", objectNew.toString());
+            new WebTask(Nearbybooks.this, WebUrls.BASE_URL, objectNew, Nearbybooks.this, RequestCode.CODE_Category_List, 1);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void onComplete(String response, int taskcode) {
-        if (RequestCode.CODE_Category_List == taskcode){
-            Log.d("category_list_res",response);
+        if (RequestCode.CODE_Category_List == taskcode) {
+            Log.d("category_list_res", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                if (jsonObject!=null && jsonObject.optString("status").compareTo("success")==0){
+                if (jsonObject != null && jsonObject.optString("status").compareTo("success") == 0) {
                     JSONArray dataArray = jsonObject.optJSONArray("data");
-                    for (int i =0 ;i<dataArray.length();i++){
+                    for (int i = 0; i < dataArray.length(); i++) {
                         JSONObject dataObj = dataArray.optJSONObject(i);
-                        ShowingCategoriesModel showingCategoriesModel= new ShowingCategoriesModel();
+                        ShowingCategoriesModel showingCategoriesModel = new ShowingCategoriesModel();
                         showingCategoriesModel.setId(dataObj.optString("id"));
                         showingCategoriesModel.setName(dataObj.optString("cat_name"));
                         showingCategoriesModelArrayList.add(showingCategoriesModel);
                     }
-                    showingCategoriesAdapter = new ShowingCategoriesAdapter(showingCategoriesModelArrayList,this);
+                    showingCategoriesAdapter = new ShowingCategoriesAdapter(showingCategoriesModelArrayList, this);
                     showing_categories_recyclerView.setAdapter(showingCategoriesAdapter);
 
                 }
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
